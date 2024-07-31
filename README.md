@@ -1,4 +1,5 @@
-# Neighborhood-App
-This is my collage project, This application is used within neighbors enhance the connection between them.
+#Smart Water Bottle
 
-We need help from others to create this :) , You can contribute on this if you can.
+This is project combine IOT and software application.
+
+The purpose of it use for keep user hydration level good :)
