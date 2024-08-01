@@ -2,8 +2,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+
 
 const WelcomeScreen = () => {
+  const navigation = useNavigation();
   return (
     <LinearGradient colors={['#2DAFD8', '#185D72']} style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -11,9 +14,9 @@ const WelcomeScreen = () => {
       <Text style={styles.appName}>Aguasync</Text>
       <Text style={styles.description}>
         Welcome to Aguasync! This tracks your water intake effortlessly.
-        Track your hydration progress and see how it impacts your overall health.
+        Track your hydration progress and see how it impacts your overall health. 
       </Text>
-      <TouchableOpacity style={styles.button} onPress={() => { /* Handle the button press here */ }}>
+      <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('InputNameScreen') }}>
         <Text style={styles.buttonText}>Get Start</Text>
       </TouchableOpacity>
     </LinearGradient>
