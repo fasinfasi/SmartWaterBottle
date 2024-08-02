@@ -1,10 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { useNavigation } from '@react-navigation/native';
+
 
 const { width } = Dimensions.get('window');
 
 const InputScreen = () => {
+
+  const navigation = useNavigation();
+
   const [name, setName] = useState('');
   const [sex, setSex] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -47,7 +52,7 @@ const InputScreen = () => {
           onClose={() => setPickerOpen(false)}
           useNativeAndroidPickerStyle={false} // Ensures custom styling is applied on Android
         />
-        <TouchableOpacity style={styles.button} onPress={() => { /* Handle continue action */ }}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AgeInputScreen') }}>
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>

@@ -1,18 +1,24 @@
 import React from 'react';
-import {Text, SafeAreaView} from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import InputScreen from './app/screens/InputNameScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AgeInputScreen from './app/screens/InputAgeScreen';
 
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  <NavigationContainer>
+  return (
+    <NavigationContainer>
       <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="InputScreen" component={InputScreen} /> {/* Replace with your actual screen */}
+        <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="InputScreen" component={InputScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AgeInputScreen" component={AgeInputScreen} options={{ headerShown: false }} />
+
       </Stack.Navigator>
     </NavigationContainer>
+  );
 };
 
 export default App;

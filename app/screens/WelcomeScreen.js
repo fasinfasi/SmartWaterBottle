@@ -1,9 +1,7 @@
-
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
@@ -16,7 +14,7 @@ const WelcomeScreen = () => {
         Welcome to Aguasync! This tracks your water intake effortlessly.
         Track your hydration progress and see how it impacts your overall health. 
       </Text>
-      <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('InputNameScreen') }}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('InputScreen')}>
         <Text style={styles.buttonText}>Get Start</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -26,7 +24,6 @@ const WelcomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -48,14 +45,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     position: 'absolute',
     marginBottom: 20,
-    
   },
   button: {
     backgroundColor: '#ffffff',
     paddingVertical: 18,
     paddingHorizontal: 84,
     borderRadius: 25,
-    marginTop: 300
+    marginTop: 300,
   },
   buttonText: {
     color: '#007AFF',
