@@ -31,7 +31,7 @@ const InputScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Name"
-          placeholderTextColor="#000"
+          placeholderTextColor="#ccc"
           onChangeText={setName}
           value={name}
         />

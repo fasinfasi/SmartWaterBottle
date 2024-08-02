@@ -1,42 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';   
-
+import { View, Text, StyleSheet, TouchableOpacity, button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 
 const AgeInputScreen = () => {
   const navigation = useNavigation();
-  const [selectedAge, setSelectedAge] = useState(1); // Initial age set to 1
+  const [selectedAge, setSelectedAge] = useState(12); // Initial age set to 12
 
   const ageOptions = Array.from({ length: 120 }, (_, index) => index + 1);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        {/* Add your back arrow icon here */}
+      <TouchableOpacity style={styles.arrow} onPress={() => navigation.goBack()}>
+        <Icon name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-      <Text style={styles.title}>What's your age?</Text>
-      <ScrollPicker
-        dataSource={ageOptions}
-        selectedIndex={selectedAge - 1} // Adjust index to match array
-        renderItem={(data, index) => (
-          <Text style={styles.pickerItem}>{data}</Text>
-        )}
-        onValueChange={(data, index) => setSelectedAge(index + 1)}
-        wrapperHeight={180}
-        wrapperBackground="#FFFFFF"
-        itemHeight={35}
-        highlightColor="#000"
-        highlightBorderWidth={2}
-      />
-      <TouchableOpacity style={styles.continueButton} onPress={() => {
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Who old are you?</Text>
+      </View>
+      <View style={styles.scrollPickerContainer}>
+        <ScrollPicker
+            dataSource={ageOptions}
+            selectedIndex={selectedAge - 1} // Adjust index to match array
+            renderItem={(data, index) => (
+            <Text style={styles.pickerItem}>{data}</Text>
+            )}
+            onValueChange={(data, index) => setSelectedAge(index + 1)}
+            wrapperHeight={180}
+            wrapperBackground="#FFFFFF"
+            itemHeight={35}
+            highlightColor="#000"
+            highlightBorderWidth={2}
+        />
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => {
         // Handle continue action, e.g., navigation to next screen
         if (selectedAge) {
           // Navigate to the next screen with the selected age
           navigation.navigate('NextScreen', { age: selectedAge });
         }
       }}>
-        <Text style={styles.continueButtonText}>Continue</Text>
+        <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
     </View>
   );
@@ -49,9 +53,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  arrow: {
+    position: 'absolute',
+    left: '8%',
+    top: '8%',
+  },
+  titleContainer: {
+    position: 'absolute',
+    top: '20%', // Adjust this percentage as needed to move the title up or down
+    width: '100%',
+    alignItems: 'center',
+  },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 32,
+    color: '#0000ff',
+  },
+  scrollPickerContainer: {
+    position: 'absolute',
+    top: '40%',
+    height: '150'
   },
   pickerItem: {
     textAlign: 'center',
@@ -68,16 +88,18 @@ const styles = StyleSheet.create({
   ageOptionText: {
     textAlign: 'center',
   },
-  continueButton: {
-    backgroundColor: 'blue',
-    padding: 15,
-    borderRadius: 5,
-    marginTop: 20,
-    width: '100%',
+  button: {
+    backgroundColor: '#0000ff',
+    paddingVertical: 15,
+    paddingHorizontal: 80,
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: 30,
   },
-  continueButtonText: {
-    color: 'white',
-    textAlign: 'center',
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
