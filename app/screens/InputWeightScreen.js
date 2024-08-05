@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 
-const AgeInputScreen = () => {
+const weightInputScreen = () => {
   const navigation = useNavigation();
-  const [selectedAge, setSelectedAge] = useState(12); // Initial age set to 12
+  const [selectedWeight, setSelectedWeight] = useState(60); // Initial weight set to 60
 
-  const ageOptions = Array.from({ length: 120 }, (_, index) => index + 1);
+  const weightOptions = Array.from({ length: 240 }, (_, index) => index + 1);
 
   return (
     <View style={styles.container}>
@@ -16,16 +16,16 @@ const AgeInputScreen = () => {
         <Icon name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Who old are you?</Text>
+        <Text style={styles.title}>What's your weight?</Text>
       </View>
       <View style={styles.scrollPickerContainer}>
         <ScrollPicker
-            dataSource={ageOptions}
-            selectedIndex={selectedAge - 1} // Adjust index to match array
+            dataSource={weightOptions}
+            selectedIndex={selectedWeight - 1} // Adjust index to match array
             renderItem={(data, index) => (
             <Text style={styles.pickerItem}>{data}</Text>
             )}
-            onValueChange={(data, index) => setSelectedAge(index + 1)}
+            onValueChange={(data, index) => setSelectedWeight(index + 1)}
             wrapperHeight={180}
             wrapperBackground="#FFFFFF"
             itemHeight={35}
@@ -35,9 +35,9 @@ const AgeInputScreen = () => {
       </View>
       <TouchableOpacity style={styles.button} onPress={() => {
         // Handle continue action, e.g., navigation to next screen
-        if (selectedAge) {
-          // Navigate to the next screen with the selected age
-          navigation.navigate('weightInputScreen', { age: selectedAge });
+        if (selectedWeight) {
+          // Navigate to the next screen with the selected weight
+          navigation.navigate('NextScreen', { weight: selectedWeight });
         }
       }}>
         <Text style={styles.buttonText}>Continue</Text>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     position: 'absolute',
-    top: '20%', // Adjust this percentage as needed to move the title up or down
+    top: '20%', // Adjust this percentweight as needed to move the title up or down
     width: '100%',
     alignItems: 'center',
   },
@@ -77,15 +77,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems:'center',
   },
-  ageOption: {
+  weightOption: {
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: '#ccc',
   },
-  selectedAgeOption: {
+  selectedweightOption: {
     backgroundColor: '#f0f0f0',
   },
-  ageOptionText: {
+  weightOptionText: {
     textAlign: 'center',
   },
   button: {
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AgeInputScreen;
+export default weightInputScreen;
