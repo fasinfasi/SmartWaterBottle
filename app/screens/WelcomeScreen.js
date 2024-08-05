@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     position: 'absolute',
     marginBottom: 20,
+    bottom: 125
   },
   button: {
     backgroundColor: '#ffffff',
