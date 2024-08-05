@@ -9,9 +9,9 @@ const WelcomeScreen = () => {
     <LinearGradient colors={['#2DAFD8', '#185D72']} style={styles.container}>
       <StatusBar barStyle="light-content" />
       <Image source={require('../assets/water_bottle_logo_welcome_page.png')} style={styles.image} />
-      <Text style={styles.appName}>Aguasync</Text>
+      <Text style={styles.appName}>AquaSync</Text>
       <Text style={styles.description}>
-        Welcome to Aguasync! This tracks your water intake effortlessly.
+        Welcome to AquaSync! This tracks your water intake effortlessly.
         Track your hydration progress and see how it impacts your overall health. 
       </Text>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('InputScreen')}>
