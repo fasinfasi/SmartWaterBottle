@@ -37,7 +37,7 @@ const AgeInputScreen = () => {
         // Handle continue action, e.g., navigation to next screen
         if (selectedAge) {
           // Navigate to the next screen with the selected age
-          navigation.navigate('weightInputScreen', { age: selectedAge });
+          navigation.navigate('WeightInputScreen', { age: selectedAge });
         }
       }}>
         <Text style={styles.buttonText}>Continue</Text>

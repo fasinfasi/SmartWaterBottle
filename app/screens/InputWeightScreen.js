@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 
-const weightInputScreen = () => {
+const WeightInputScreen = () => {
   const navigation = useNavigation();
   const [selectedWeight, setSelectedWeight] = useState(60); // Initial weight set to 60
 
@@ -37,7 +37,7 @@ const weightInputScreen = () => {
         // Handle continue action, e.g., navigation to next screen
         if (selectedWeight) {
           // Navigate to the next screen with the selected weight
-          navigation.navigate('NextScreen', { weight: selectedWeight });
+          navigation.navigate('HomeScreen', { weight: selectedWeight });
         }
       }}>
         <Text style={styles.buttonText}>Continue</Text>
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default weightInputScreen;
+export default WeightInputScreen;

@@ -4,7 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import InputScreen from './app/screens/InputNameScreen';
 import AgeInputScreen from './app/screens/InputAgeScreen';
-import weightInputScreen from './app/screens/InputWeightScreen';
+import WeightInputScreen from './app/screens/InputWeightScreen';
+import HomeScreen from './app/screens/HomeScreen';
+
 
  
 const Stack = createNativeStackNavigator();
@@ -16,7 +18,9 @@ const App = () => {
         <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="InputScreen" component={InputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AgeInputScreen" component={AgeInputScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="weightInputScreen" component={weightInputScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="WeightInputScreen" component={WeightInputScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+
       </Stack.Navigator> 
     </NavigationContainer>
   );
