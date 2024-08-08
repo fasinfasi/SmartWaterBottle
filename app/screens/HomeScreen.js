@@ -48,35 +48,37 @@ const HomeScreen = () => {
           <Text style={styles.batteryText}>{batteryLevel}%</Text>
         </View>
       </View>
-      <View style={styles.waterContainer}>
-        <View style={styles.animatedWater}>
-          <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
+      <View style={styles.contentContainer}>
+        <View style={styles.waterContainer}>
+          <View style={styles.animatedWater}>
+            <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.progressBarSection}>
-        <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
-        <View style={styles.progressBarContainer}>
-          {renderProgressBar()}
-          <Text style={styles.dailyGoalText}>Daily goal</Text>
+        <View style={styles.progressBarSection}>
+          <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
+          <View style={styles.progressBarContainer}>
+            {renderProgressBar()}
+            <Text style={styles.dailyGoalText}>Daily goal</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.bannerContainer}>
-        <View style={styles.bottleInfo}>
-          <Image source={require('../assets/simplebottle.png')} style={styles.bottleIcon} />
-          <Text>500ml</Text>
+        <View style={styles.bannerContainer}>
+          <View style={styles.bottleInfo}>
+            <Image source={require('../assets/simplebottle.png')} style={styles.bottleIcon} />
+            <Text>500ml</Text>
+          </View>
+          <View style={styles.purityLevel}>
+            <Text>Purity</Text>
+            <Text>{waterPurity}</Text>
+          </View>
+          <View style={styles.waterLevel}>
+            <Text>Level</Text>
+            <Text>{waterLevelPercentage}%</Text>
+          </View>
         </View>
-        <View style={styles.purityLevel}>
-          <Text>Purity</Text>
-          <Text>{waterPurity}</Text>
+        <View style={[styles.weatherContainer, currentWeather === 'Rain' ? styles.rainyWeather : styles.sunnyWeather]}>
+          <Text style={styles.temperatureText}>{currentTemperature}°</Text>
+          <Text>{currentWeather}</Text>
         </View>
-        <View style={styles.waterLevel}>
-          <Text>Level</Text>
-          <Text>{waterLevelPercentage}%</Text>
-        </View>
-      </View>
-      <View style={[styles.weatherContainer, currentWeather === 'Rain' ? styles.rainyWeather : styles.sunnyWeather]}>
-        <Text style={styles.temperatureText}>{currentTemperature}°</Text>
-        <Text>{currentWeather}</Text>
       </View>
       <View style={styles.bottomTabContainer}>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Home')}>
@@ -105,22 +107,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    // marginTop: Platform.OS === 'android' ? 0 : 0,
+    marginTop: 0,
   },
   batteryContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    left: 10
+    marginLeft: 10,
   },
   batteryText: {
     marginLeft: 4,
     fontSize: 16,
   },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   waterContainer: {
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   animatedWater: {
     width: '100%',
@@ -136,35 +142,38 @@ const styles = StyleSheet.create({
   },
   progressBarSection: {
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     marginVertical: 10,
+    position: 'absolute', 
+    top: 220
   },
   targetWaterText: {
     fontSize: 14,
-    marginBottom: 4,
+    marginBottom: 2,
   },
   progressBarContainer: {
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   dailyGoalText: {
     fontSize: 14,
-    marginTop: 4,
+    marginTop: 2,
   },
   bannerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 8,
+    padding: 18,
     backgroundColor: '#e0e0e0',
     borderRadius: 8,
+    bottom: 25
   },
   bottleInfo: {
     alignItems: 'center',
   },
   bottleIcon: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 50,
   },
   purityLevel: {
     alignItems: 'center',
@@ -173,11 +182,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   weatherContainer: {
-    padding: 16,
+    padding: 40,
     borderRadius: 8,
-    marginTop: 16,
     alignItems: 'center',
-    
+    bottom: 100
   },
   rainyWeather: {
     backgroundColor: '#9e9e9e',
