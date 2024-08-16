@@ -6,6 +6,10 @@ import InputScreen from './app/screens/InputNameScreen';
 import AgeInputScreen from './app/screens/InputAgeScreen';
 import WeightInputScreen from './app/screens/InputWeightScreen';
 import HomeScreen from './app/screens/HomeScreen';
+import SettingScreen from './app/screens/SettingScreen';
+import QuestionScreen from './app/screens/QuestionScreen';
+
+
 
 
  
@@ -20,6 +24,10 @@ const App = () => {
         <Stack.Screen name="AgeInputScreen" component={AgeInputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="WeightInputScreen" component={WeightInputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
+
+
 
       </Stack.Navigator> 
     </NavigationContainer>

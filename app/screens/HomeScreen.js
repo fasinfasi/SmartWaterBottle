@@ -81,14 +81,14 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={styles.bottomTabContainer}>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('HomeScreen')}>
           <FontAwesome5 name="home" size={30} color="black" />
           <View style={styles.activeTabIndicator} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Bar')}>
           <FontAwesome5 name="chart-bar" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('SettingScreen')}>
           <FontAwesome5 name="user" size={24} color="black" />
         </TouchableOpacity>
       </View>

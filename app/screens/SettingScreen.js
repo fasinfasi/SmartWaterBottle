@@ -30,7 +30,7 @@ const SettingScreen = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('FAQ')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('QuestionScreen')}>
           <FontAwesome5 name="question" size={24} color="purple" />
           <View style={styles.textContainer}>
             <Text style={styles.buttonText}>FAQ</Text>
