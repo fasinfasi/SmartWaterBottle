@@ -18,8 +18,8 @@ const QuestionScreen = ({ navigation }) => {
   ];
 
   const answers = [
-    'In home page, there is a Bluetooth icon. Tap on it. There will be a popup connect button. Click on it and connect.',
-    'Hydration target depends on your Age, Sex, Weight, Activity level, and Health condition.',
+    'In home page, there is a Bluetooth icon, \n - Tap on it \n - There will be a popup connect button \n - Click on it and connect',
+    'Hydration target depends on your\n - Age \n - Sex \n - Weight \n - Activity level \n - Health condition',
     'Go to statistic page and click on the graph to get your data.',
     'Yes, your data is safe in this app. We only use it to analyze your required water level. We never share your data with any third parties.',
     'You can set your sleep time in general settings, which helps us restrict notifications.',
@@ -27,10 +27,10 @@ const QuestionScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={styles.arrow} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back-outline" size={24} color="black" />
         </TouchableOpacity>
+      <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>FAQ</Text>
       </View>
 
@@ -61,23 +61,33 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
+  arrow: {
+    position: 'absolute',
+    left: '8%',
+    top: '6%',
+  },
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    padding: 5,
     backgroundColor: '#fff',
+    top: 90,
+
   },
   headerTitle: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   content: {
     paddingHorizontal: 16,
+    paddingVertical: 70,
+    marginTop: 60,
+    bottom: 20
   },
   questionContainer: {
-    marginVertical: 8,
+    marginVertical: 18,
   },
   questionButton: {
     backgroundColor: '#3B3BFF',
@@ -86,18 +96,28 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeButton: {
-    backgroundColor: '#A9F6B2',
-  },
+    backgroundColor: '#3AA5D3',
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+},
   questionText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   answerText: {
-    marginTop: 8,
-    color: '#333',
-    fontSize: 14,
+    marginTop: 0,
+    color: '#000',
+    backgroundColor: '#3AA5D3',
+    fontSize: 16,
+    fontWeight: '550'
+,    paddingBottom: 3,
     paddingHorizontal: 12,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8
   },
 });
 
