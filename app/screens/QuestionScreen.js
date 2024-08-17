@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 70,
     marginTop: 60,
-    bottom: 20
+    bottom: 20,
   },
   questionContainer: {
     marginVertical: 18,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
+    borderBottomRightRadius: 0,
 },
   questionText: {
     color: '#fff',
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
     color: '#000',
     backgroundColor: '#3AA5D3',
     fontSize: 16,
-    fontWeight: '550'
-,    paddingBottom: 3,
+    fontWeight: '550',
+    paddingBottom: 3,
     paddingHorizontal: 12,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8

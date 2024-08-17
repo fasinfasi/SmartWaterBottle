@@ -14,7 +14,7 @@ const WelcomeScreen = () => {
         Welcome to AquaSync! This tracks your water intake effortlessly.
         Track your hydration progress and see how it impacts your overall health. 
       </Text>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('InputScreen')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('LoginScreen')}>
         <Text style={styles.buttonText}>Get Start</Text>
       </TouchableOpacity>
     </LinearGradient>
