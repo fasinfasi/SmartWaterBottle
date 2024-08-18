@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import CheckBox from '@react-native-community/checkbox';
 import {  SafeAreaView, View, Image, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Icons for Google, Facebook, Apple
 

@@ -10,6 +10,13 @@ import HomeScreen from './app/screens/HomeScreen';
 import SettingScreen from './app/screens/SettingScreen';
 import QuestionScreen from './app/screens/QuestionScreen';
 
+import NotificationScreen from './app/screens/NotificationScreen';
+import ProfileScreen from './app/screens/ProfileScreen';
+import EditProfileScreen from './app/screens/EditProfileScreen';
+
+
+
+
 
 
 
@@ -28,6 +35,13 @@ const App = () => {
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }} />
         <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
+
+        <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }} />
+
+
+
 
 
 

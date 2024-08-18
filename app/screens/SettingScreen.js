@@ -9,14 +9,14 @@ const SettingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ProfileScreen')}>
           <FontAwesome5 name="smile" size={24} color="yellow" />
           <View style={styles.textContainer}>
             <Text style={styles.buttonText}>My Profile</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Notification')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NotificationScreen')}>
           <FontAwesome5 name="bell" size={24} color="orange" />
           <View style={styles.textContainer}>
             <Text style={styles.buttonText}>Notification</Text>
