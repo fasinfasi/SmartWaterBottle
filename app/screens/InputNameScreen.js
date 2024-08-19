@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, StatusBar, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
 
-
 const { width } = Dimensions.get('window');
 
-const InputScreen = () => {
-
+const NameInputScreen = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState('');
@@ -16,9 +14,16 @@ const InputScreen = () => {
   const pickerRef = useRef(null);
 
   const handleOutsidePress = () => {
-    // Hide the keyboard and close picker if it's open
     Keyboard.dismiss();
     setPickerOpen(false);
+  };
+
+  const handleContinuePress = () => {
+    if (name === '' || sex === '') {
+      Alert.alert('Validation Error', 'Please fill in all fields.');
+    } else {
+      navigation.navigate('AgeInputScreen');
+    }
   };
 
   return (
@@ -50,9 +55,9 @@ const InputScreen = () => {
           }}
           onOpen={() => setPickerOpen(true)}
           onClose={() => setPickerOpen(false)}
-          useNativeAndroidPickerStyle={false} // Ensures custom styling is applied on Android
+          useNativeAndroidPickerStyle={false}
         />
-        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AgeInputScreen') }}>
+        <TouchableOpacity style={styles.button} onPress={handleContinuePress}>
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
@@ -70,22 +75,22 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     position: 'absolute',
-    top: '20%', // Adjust this percentage as needed to move the title up or down
+    top: '20%',
     width: '100%',
     alignItems: 'center',
   },
   title: {
-    fontSize: width * 0.08, // 8% of screen width
+    fontSize: width * 0.08,
     color: '#0000ff',
   },
   input: {
-    width: width * 0.8, // 80% of screen width
+    width: width * 0.8,
     height: 50,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 15,
-    marginTop: 20, // Adjust if needed
+    marginTop: 20,
     marginBottom: 20,
     fontSize: 18,
     color: '#000',
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    width: width * 0.8, // Same width as the input
+    width: width * 0.8,
     height: 50,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -118,7 +123,7 @@ const pickerSelectStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputAndroid: {
-    width: width * 0.8, // Same width as the input
+    width: width * 0.8,
     height: 50,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -130,4 +135,4 @@ const pickerSelectStyles = StyleSheet.create({
   },
 });
 
-export default InputScreen;
+export default NameInputScreen;

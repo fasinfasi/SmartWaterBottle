@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  SafeAreaView, View, Image, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
+import {  SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Icons for Google, Facebook, Apple
 
 const LoginScreen = ({ navigation }) => {
@@ -61,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
                     color={rememberMe ? '#0080FF' : '#999'}
                     />
                 </View>
-                <Text style={styles.label}>Forget Password</Text>
+                <Text style={styles.label}>Forget Password?</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('HomeScreen')} >
@@ -88,7 +88,7 @@ const LoginScreen = ({ navigation }) => {
 
                 <View style={styles.signupContainer}>
                 <Text>Not registered yet?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                <TouchableOpacity onPress={() => navigation.navigate('NameInputScreen')}>
                     <Text style={styles.signupText}> Create Account</Text>
                 </TouchableOpacity>
                 </View>
