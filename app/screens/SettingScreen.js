@@ -37,7 +37,7 @@ const SettingScreen = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Feedback')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('FeedbackScreen')}>
           <FontAwesome5 name="comment" size={24} color="orange" />
           <View style={styles.textContainer}>
             <Text style={styles.buttonText}>Feedback</Text>

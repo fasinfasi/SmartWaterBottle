@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ProgressBarAndroid, ProgressViewIOS, Platform, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import { ProgressBar } from 'react-native-paper'; // Import ProgressBar from react-native-paper
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const currentWaterConsumption = 1750;
+  const currentWaterConsumption = 1290;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
@@ -14,26 +15,16 @@ const HomeScreen = () => {
   const batteryLevel = 58;
 
   const renderProgressBar = () => {
-    if (Platform.OS === 'android') {
-      return (
-        <ProgressBarAndroid
-          styleAttr="Horizontal"
-          indeterminate={false}
-          progress={currentWaterConsumption / targetWaterConsumption}
+    const progressValue = currentWaterConsumption / targetWaterConsumption;
+    return (
+      <View style={{ width: '100%' }}>
+        <ProgressBar
+          progress={progressValue} // Use 'progress' prop instead of 'value'
           color="#3b82f6"
-          style={{ width: '100%', height: 10 }}
+          style={styles.progressBar}
         />
-      );
-    } else {
-      return (
-        <ProgressViewIOS
-          progress={currentWaterConsumption / targetWaterConsumption}
-          trackTintColor="#d3d3d3"
-          progressTintColor="#3b82f6"
-          style={{ width: '100%', height: 10 }}
-        />
-      );
-    }
+      </View>
+    );
   };
 
   return (
@@ -107,7 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 0,
+    marginTop: 5,
   },
   batteryContainer: {
     flexDirection: 'row',
@@ -145,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginVertical: 10,
     position: 'absolute', 
-    top: 220
+    top: 220,
   },
   targetWaterText: {
     fontSize: 14,
@@ -166,7 +157,7 @@ const styles = StyleSheet.create({
     padding: 18,
     backgroundColor: '#e0e0e0',
     borderRadius: 8,
-    bottom: 25
+    bottom: 25,
   },
   bottleInfo: {
     alignItems: 'center',
@@ -185,7 +176,7 @@ const styles = StyleSheet.create({
     padding: 40,
     borderRadius: 8,
     alignItems: 'center',
-    bottom: 100
+    bottom: 100,
   },
   rainyWeather: {
     backgroundColor: '#9e9e9e',
@@ -218,6 +209,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     marginTop: 4,
     borderRadius: 2,
+  },
+  progressBar: {
+    height: 10,
   },
 });
 

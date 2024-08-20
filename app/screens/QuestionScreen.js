@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: 'bold',
   },
   content: {

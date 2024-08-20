@@ -57,24 +57,27 @@ const GeneralSetting = () => {
         </View>
       </View>
 
-      <View style={styles.spacing} />
+      {/* <View style={styles.spacing} /> */}
 
       <View style={styles.timeContainer}>
-        <Text style={styles.sleepTimeLabel}>Sleep Time:</Text>
+        <Text style={styles.sleepTimeLabel}>Sleep Time :</Text>
         <View style={styles.timeFields}>
           <View style={styles.timeField}>
-            <Text>From:</Text>
+            <Text>From</Text>
             <TouchableOpacity onPress={() => { setCurrentPicker('start'); setIsPickerVisible(true); }}>
               <Text style={styles.timeValue}>{startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: timeFormat === '12hr' })}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.timeField}>
-            <Text>To:</Text>
+            <Text>To</Text>
             <TouchableOpacity onPress={() => { setCurrentPicker('end'); setIsPickerVisible(true); }}>
               <Text style={styles.timeValue}>{endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: timeFormat === '12hr' })}</Text>
             </TouchableOpacity>
           </View>
         </View>
+
+        
+
       </View>
 
       {isPickerVisible && (
@@ -88,7 +91,6 @@ const GeneralSetting = () => {
       )}
 
       <View style={styles.timeFormatContainer}>
-        <Text style={styles.timeFormatLabel}>Time Format:</Text>
         <View style={styles.timeFormatButtons}>
           <TouchableOpacity 
             style={[styles.timeFormatButton, timeFormat === '12hr' && styles.selectedButton]} 
@@ -143,7 +145,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: width * 0.08, 
-    color: '#0000ff',
+    color: '#000',
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   spacing: {
@@ -151,13 +154,14 @@ const styles = StyleSheet.create({
   },
   timeContainer: {
     width: '100%',
-    marginBottom: height * 0.1,
+    marginBottom: height * 0.01,
     flexDirection: 'row',
     alignItems: 'center',
   },
   sleepTimeLabel: {
     flex: 1,
     fontWeight: 'bold',
+    fontSize: 18,
     textAlign: 'left',
   },
   timeFields: {
@@ -173,12 +177,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   timeFormatContainer: {
+    marginTop: 18,
     marginBottom: height * 0.15,
-  },
-  timeFormatLabel: {
-    fontWeight: 'bold',
-    textAlign: 'left',
-    marginBottom: 10,
   },
   timeFormatButtons: {
     flexDirection: 'row',
