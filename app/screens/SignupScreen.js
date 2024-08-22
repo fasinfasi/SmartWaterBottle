@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 
 const LoginScreen = ({ navigation }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,7 +18,17 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.title}>AquaSync</Text>
 
           <View style={styles.formContainer}>
-            <Text style={styles.formTitle}>Login</Text>
+            <Text style={styles.formTitle}>Create account</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Name"
+              placeholderTextColor="#999"
+              value={name}
+              onChangeText={setName}
+              keyboardType="default"
+              autoCapitalize="none"
+            />
 
             <TextInput
               style={styles.input}
@@ -64,13 +75,13 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.label}>Forget Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('HomeScreen')}>
-              <Text style={styles.loginButtonText}>Login</Text>
+            <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('HomeScreen')}>
+              <Text style={styles.registerButtonText}>Register</Text>
             </TouchableOpacity>
 
             <View style={styles.orContainer}>
               <View style={styles.line} />
-              <Text style={styles.orText}>or Login with</Text>
+              <Text style={styles.orText}>or Signup with</Text>
               <View style={styles.line} />
             </View>
 
@@ -80,9 +91,9 @@ const LoginScreen = ({ navigation }) => {
             </TouchableOpacity>
 
             <View style={styles.signupContainer}>
-              <Text>Not registered yet?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-                <Text style={styles.signupText}> Create Account</Text>
+              <Text>I have an account?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                <Text style={styles.signupText}> Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -155,14 +166,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
   },
-  loginButton: {
+  registerButton: {
     backgroundColor: '#28a745',
     paddingVertical: 16,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 20,
   },
-  loginButtonText: {
+  registerButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',

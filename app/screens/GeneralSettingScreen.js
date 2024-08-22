@@ -10,8 +10,16 @@ const GeneralSetting = () => {
   const navigation = useNavigation();
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [currentPicker, setCurrentPicker] = useState('start');
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [startTime, setStartTime] = useState(() => {
+    const date = new Date();
+    date.setHours(8, 0, 0, 0); // Set start time to 8:00 AM
+    return date;
+  });
+  const [endTime, setEndTime] = useState(() => {
+    const date = new Date();
+    date.setHours(16, 0, 0, 0); // Set end time to 6:00 PM
+    return date;
+  });
   const [timeFormat, setTimeFormat] = useState('12hr');
 
   const handleTimePicker = (event, selectedDate) => {
@@ -56,8 +64,6 @@ const GeneralSetting = () => {
           <Text style={styles.title}>General Setting</Text>
         </View>
       </View>
-
-      {/* <View style={styles.spacing} /> */}
 
       <View style={styles.timeContainer}>
         <Text style={styles.sleepTimeLabel}>Sleep Time :</Text>
@@ -108,7 +114,7 @@ const GeneralSetting = () => {
       </View>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KnowMoreAboutScreen')}>
-        <Text style={styles.buttonText}>Know More About</Text>
+        <Text style={styles.buttonText}>Know more about hydration</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAll}>
         <Text style={styles.buttonText}>Delete All Data</Text>
@@ -148,9 +154,6 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  spacing: {
-    marginBottom: 20,
   },
   timeContainer: {
     width: '100%',
@@ -193,28 +196,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedButton: {
-    backgroundColor: '#C133FF',
+    backgroundColor: '#9919bd',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: '#29438f',
     padding: 10,
     marginBottom: 80,
     borderRadius: 5,
     alignItems: 'center',
   },
   deleteButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#f00520',
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 18,
     borderRadius: 5,
     alignItems: 'center',
   },
   signOutButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#f00520',
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,

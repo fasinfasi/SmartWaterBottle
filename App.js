@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import LoginScreen from './app/screens/LoginScreen';
+import SignupScreen from './app/screens/SignupScreen';
 import NameInputScreen from './app/screens/InputNameScreen';
 import AgeInputScreen from './app/screens/InputAgeScreen';
 import WeightInputScreen from './app/screens/InputWeightScreen';
@@ -13,12 +14,7 @@ import NotificationScreen from './app/screens/NotificationScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
 import EditProfileScreen from './app/screens/EditProfileScreen';
 import GeneralSetting from './app/screens/GeneralSettingScreen';
-
 import FeedbackScreen from './app/screens/FeedbackScreen';
-
-
-
-
 
  
 const Stack = createNativeStackNavigator();
@@ -29,6 +25,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false }} />
         <Stack.Screen name="NameInputScreen" component={NameInputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AgeInputScreen" component={AgeInputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="WeightInputScreen" component={WeightInputScreen} options={{ headerShown: false }} />
