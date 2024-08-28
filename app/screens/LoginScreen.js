@@ -1,14 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Icons for Google, Facebook, Apple
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 
+WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  // Configure Google authentication
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId: '1031087968757-no3ghddurivnndts762qfpn3j0fj3h1o.apps.googleusercontent.com',
+    redirectUri: 'https://auth.expo.io/@fasin/SmartWaterBottle', 
+  });
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+      console.log('Google ID Token:', id_token);
+      handleGoogleSignIn(id_token);
+    }
+  }, [response]);
+
+  const handleGoogleSignIn = async (idToken) => {
+    try {
+      // Send the ID token to your backend or handle it locally
+      console.log('Successfully signed in with Google!');
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      console.error('Error during Google sign-in:', error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -74,8 +101,8 @@ const LoginScreen = ({ navigation }) => {
               <View style={styles.line} />
             </View>
 
-            <TouchableOpacity style={styles.googleButton}>
-              <Image source={require('../assets/google_logo2.png')} style={styles.googleIcon} />
+            <TouchableOpacity style={styles.googleButton} onPress={() => promptAsync()}>
+              <Image source={require('../assets/google_logo.png')} style={styles.googleIcon} />
               <Text style={styles.googleButtonText}>Continue with Google</Text>
             </TouchableOpacity>
 
@@ -99,7 +126,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: 'red',
     justifyContent: 'center',
   },
   title: {
@@ -107,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 50,  // Adjust margin to place the text in the desired location
+    marginBottom: 50,
   },
   formContainer: {
     backgroundColor: '#e8e7e6',
@@ -193,7 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   googleIcon: {
-    width: 30,  // Adjust the size as needed
+    width: 30,
     height: 38,
     marginRight: 10,
   },

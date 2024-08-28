@@ -1,10 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, StatusBar, Animated } from 'react-native';
 import { ProgressBar } from 'react-native-paper'; // Import ProgressBar from react-native-paper
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 const HomeScreen = () => {
+
+  // const [animatedValue, setAnimatedValue] = useState(new Animated.Value(0));
+  const [waterHeight, setWaterHeight] = useState(0); 
+
   const navigation = useNavigation();
   const currentWaterConsumption = 1290;
   const targetWaterConsumption = 3600;
@@ -13,6 +17,29 @@ const HomeScreen = () => {
   const currentWeather = 'Rain';
   const currentTemperature = 18;
   const batteryLevel = 58;
+
+
+  // useEffect(() => {
+  //   Animated.loop(
+  //     Animated.timing(animatedValue, {
+  //       toValue: 1,
+  //       duration: 2000,
+  //       useNativeDriver: true,
+  //     }),
+  //   ).start();
+  // }, [animatedValue]);
+
+  // useEffect(() => {
+  //   const waterHeightPercentage = (currentWaterConsumption / targetWaterConsumption) * 100;
+  //   setWaterHeight(waterHeightPercentage);
+  // }, [currentWaterConsumption]);
+
+  // const animatedWaterStyle = {
+  //   height: animatedValue.interpolate({
+  //     inputRange: [0, 1],
+  //     outputRange: [0, waterHeight],
+  //   }),
+  // };
 
   const renderProgressBar = () => {
     const progressValue = currentWaterConsumption / targetWaterConsumption;
@@ -41,9 +68,9 @@ const HomeScreen = () => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.waterContainer}>
-          <View style={styles.animatedWater}>
+          {/* <View style={[styles.animatedWater, animatedWaterStyle]}> */}
             <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
-          </View>
+          {/* </View> */}
         </View>
         <View style={styles.progressBarSection}>
           <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
@@ -76,7 +103,7 @@ const HomeScreen = () => {
           <FontAwesome5 name="home" size={30} color="black" />
           <View style={styles.activeTabIndicator} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Bar')}>
+        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('GraphScreen')}>
           <FontAwesome5 name="chart-bar" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('SettingScreen')}>
@@ -118,14 +145,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 16,
   },
   animatedWater: {
-    width: '100%',
-    height: '100%',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: '#3b82f6',
-    borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderRadius: 8,
   },
   waterText: {
     fontSize: 36,

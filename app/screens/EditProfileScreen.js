@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert, ScrollVie
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
+import { Ionicons } from '@expo/vector-icons'; 
 
 // Get the device's screen width to adjust the title size dynamically
 const { width } = Dimensions.get('window');

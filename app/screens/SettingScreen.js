@@ -48,7 +48,7 @@ const SettingScreen = () => {
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('HomeScreen')}>
           <Ionicons name="home-outline" size={30} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Bar')}>
+        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('GraphScreen')}>
           <FontAwesome5 name="chart-bar" size={27} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('SettingScreen')}>

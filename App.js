@@ -14,8 +14,8 @@ import NotificationScreen from './app/screens/NotificationScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
 import EditProfileScreen from './app/screens/EditProfileScreen';
 import GeneralSetting from './app/screens/GeneralSettingScreen';
+import KnowMoreAbout from './app/screens/KnowMoreAboutScreen';
 import FeedbackScreen from './app/screens/FeedbackScreen';
-
  
 const Stack = createNativeStackNavigator();
 
@@ -34,10 +34,10 @@ const App = () => {
         <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="GeneralSetting" component={GeneralSetting} options={{ headerShown: false }} />
+        <Stack.Screen name="KnowMoreAbout" component={KnowMoreAbout} options={{ headerShown: false }} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{ headerShown: false }} />
-
         
       </Stack.Navigator> 
     </NavigationContainer>

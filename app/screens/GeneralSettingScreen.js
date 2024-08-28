@@ -113,7 +113,7 @@ const GeneralSetting = () => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KnowMoreAboutScreen')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('KnowMoreAbout')}>
         <Text style={styles.buttonText}>Know more about hydration</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.deleteButton} onPress={handleDeleteAll}>

@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Icons for Google, Facebook, Apple
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 
+// Required to complete the OAuth session for Expo Go
+WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -10,6 +14,36 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  // Configure Google authentication
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId: '1031087968757-no3ghddurivnndts762qfpn3j0fj3h1o.apps.googleusercontent.com',
+    redirectUri: 'https://auth.expo.io/@fasin/SmartWaterBottle',
+  });
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+      console.log('Google ID Token:', id_token);
+      // Handle the token, send to backend or store locally
+    }
+  }, [response]);
+
+  const handleSignUp = async () => {
+    try {
+      // This is where you handle sign-up logic
+      const mockResponse = { success: true };
+
+      if (mockResponse.success) {
+        console.log('Sign-up successful!');
+        navigation.navigate('NameInputScreen');
+      } else {
+        console.log('Sign-up failed');
+      }
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -75,7 +109,7 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.label}>Forget Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('HomeScreen')}>
+            <TouchableOpacity style={styles.registerButton} onPress={handleSignUp}>
               <Text style={styles.registerButtonText}>Register</Text>
             </TouchableOpacity>
 
@@ -85,8 +119,8 @@ const LoginScreen = ({ navigation }) => {
               <View style={styles.line} />
             </View>
 
-            <TouchableOpacity style={styles.googleButton}>
-              <Image source={require('../assets/google_logo2.png')} style={styles.googleIcon} />
+            <TouchableOpacity style={styles.googleButton} onPress={() => promptAsync()}>
+              <Image source={require('../assets/google_logo.png')} style={styles.googleIcon} />
               <Text style={styles.googleButtonText}>Continue with Google</Text>
             </TouchableOpacity>
 
