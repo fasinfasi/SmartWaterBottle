@@ -13,7 +13,10 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
 
   // Configure Google authentication
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
@@ -29,19 +32,50 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [response]);
 
-  const handleSignUp = async () => {
-    try {
-      // This is where you handle sign-up logic
-      const mockResponse = { success: true };
+  const validateEmail = (text) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(text)) {
+      setEmailError('');
+    } else {
+      setEmailError('Please enter a valid email address');
+    }
+  };
 
-      if (mockResponse.success) {
-        console.log('Sign-up successful!');
-        navigation.navigate('NameInputScreen');
-      } else {
-        console.log('Sign-up failed');
+  const handleSignUp = async () => {
+    // Ensure email and password fields have been touched before validating
+    setEmailTouched(true);
+    setPasswordTouched(true);
+
+    // Validate email
+    if (!email) {
+      setEmailError('Email is required');
+    } else {
+      validateEmail(email);
+    }
+
+    // Validate password
+    if (!password) {
+      setPasswordError('Password is required');
+    } else if (password.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+    } else {
+      setPasswordError('');
+    }
+
+    // Proceed with sign-up if there are no errors
+    if (!emailError && !passwordError) {
+      try {
+        const mockResponse = { success: true };
+
+        if (mockResponse.success) {
+          console.log('Sign-up successful!');
+          navigation.navigate('NameInputScreen');
+        } else {
+          console.log('Sign-up failed');
+        }
+      } catch (error) {
+        console.error('Error signing up:', error);
       }
-    } catch (error) {
-      console.error('Error signing up:', error);
     }
   };
 
@@ -69,10 +103,20 @@ const LoginScreen = ({ navigation }) => {
               placeholder="Email"
               placeholderTextColor="#999"
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (emailTouched) {
+                  validateEmail(text);
+                }
+              }}
+              onBlur={() => {
+                setEmailTouched(true);
+                validateEmail(email);
+              }}
               keyboardType="email-address"
               autoCapitalize="none"
             />
+            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
             <View style={styles.passwordContainer}>
               <TextInput
@@ -80,7 +124,20 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Password"
                 placeholderTextColor="#999"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  if (passwordTouched && text.length < 8) {
+                    setPasswordError('Password must be at least 8 characters');
+                  } else {
+                    setPasswordError('');
+                  }
+                }}
+                onBlur={() => {
+                  setPasswordTouched(true);
+                  if (password.length < 8) {
+                    setPasswordError('Password must be at least 8 characters');
+                  }
+                }}
                 secureTextEntry={!isPasswordVisible}
               />
               <TouchableOpacity
@@ -95,19 +152,7 @@ const LoginScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity 
-              style={styles.checkboxContainer} 
-              onPress={() => setRememberMe(!rememberMe)}
-            >
-              <View style={styles.checkbox}>
-                <Ionicons
-                  name={rememberMe ? 'checkmark-outline' : null}
-                  size={20}
-                  color={rememberMe ? '#0080FF' : '#999'}
-                />
-              </View>
-              <Text style={styles.label}>Forget Password?</Text>
-            </TouchableOpacity>
+            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
             <TouchableOpacity style={styles.registerButton} onPress={handleSignUp}>
               <Text style={styles.registerButtonText}>Register</Text>
@@ -144,7 +189,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: 'red',
     justifyContent: 'center',
   },
   title: {
@@ -178,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     color: '#333',
-    marginBottom: 20,
+    marginBottom: 10, // Adjusted margin
   },
   passwordContainer: {
     position: 'relative',
@@ -188,24 +232,17 @@ const styles = StyleSheet.create({
     right: 16,
     top: 16,
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  checkbox: {
-    marginRight: 10,
-  },
-  label: {
+  errorText: {
+    color: 'red',
     fontSize: 14,
-    color: '#555',
+    marginBottom: 20,
   },
   registerButton: {
     backgroundColor: '#28a745',
     paddingVertical: 16,
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 20,
+    marginTop: 8,
   },
   registerButtonText: {
     color: '#fff',
@@ -238,7 +275,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   googleIcon: {
-    width: 30,  // Adjust the size as needed
+    width: 30,
     height: 38,
     marginRight: 10,
   },

@@ -11,7 +11,12 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
+  // const [rememberMe, setRememberMe] = useState(false);
 
   // Configure Google authentication
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
@@ -37,6 +42,53 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
+  const validateEmail = (text) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(text)) {
+      setEmailError('');
+    } else {
+      setEmailError('Please enter a valid email address');
+    }
+  };
+
+  const handleLogin = async () => {
+    // Ensure email and password fields have been touched before validating
+    setEmailTouched(true);
+    setPasswordTouched(true);
+
+    // Validate email
+    if (!email) {
+      setEmailError('Email is required');
+    } else {
+      validateEmail(email);
+    }
+
+    // Validate password
+    if (!password) {
+      setPasswordError('Password is required');
+    } else if (password.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+    } else {
+      setPasswordError('');
+    }
+
+    // Proceed with sign-up if there are no errors
+    if (!emailError && !passwordError) {
+      try {
+        const mockResponse = { success: true };
+
+        if (mockResponse.success) {
+          console.log('Sign-in successful!');
+          navigation.navigate('HomeScreen');
+        } else {
+          console.log('Sign-in failed');
+        }
+      } catch (error) {
+        console.error('Error signing in:', error);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -51,10 +103,20 @@ const LoginScreen = ({ navigation }) => {
               placeholder="Email"
               placeholderTextColor="#999"
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (emailTouched) {
+                  validateEmail(text);
+                }
+              }}
+              onBlur={() => {
+                setEmailTouched(true);
+                validateEmail(email);
+              }}
               keyboardType="email-address"
               autoCapitalize="none"
             />
+            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
             <View style={styles.passwordContainer}>
               <TextInput
@@ -62,7 +124,20 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Password"
                 placeholderTextColor="#999"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  if (passwordTouched && text.length < 8) {
+                    setPasswordError('Password must be at least 8 characters');
+                  } else {
+                    setPasswordError('');
+                  }
+                }}
+                onBlur={() => {
+                  setPasswordTouched(true);
+                  if (password.length < 8) {
+                    setPasswordError('Password must be at least 8 characters');
+                  }
+                }}
                 secureTextEntry={!isPasswordVisible}
               />
               <TouchableOpacity
@@ -77,21 +152,13 @@ const LoginScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity 
-              style={styles.checkboxContainer} 
-              onPress={() => setRememberMe(!rememberMe)}
-            >
-              <View style={styles.checkbox}>
-                <Ionicons
-                  name={rememberMe ? 'checkmark-outline' : null}
-                  size={20}
-                  color={rememberMe ? '#0080FF' : '#999'}
-                />
-              </View>
-              <Text style={styles.label}>Forget Password?</Text>
+            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+
+            <TouchableOpacity style={styles.forgetContainer} onPress={() => navigation.navigate('PasswordResetScreen')} >
+              <Text style={styles.forgetLabel}>Forget Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('HomeScreen')}>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
 
@@ -169,7 +236,12 @@ const styles = StyleSheet.create({
     right: 16,
     top: 16,
   },
-  checkboxContainer: {
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginBottom: 20,
+  },
+  forgetContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
@@ -177,7 +249,7 @@ const styles = StyleSheet.create({
   checkbox: {
     marginRight: 10,
   },
-  label: {
+  forgetLabel: {
     fontSize: 14,
     color: '#555',
   },
