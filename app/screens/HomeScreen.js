@@ -1,18 +1,35 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ProgressViewIOS, Platform, StatusBar } from 'react-native';
-import { ProgressBar } from 'react-native-paper'
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ProgressViewIOS, Platform, StatusBar, ActivityIndicator } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import axios from 'axios';  // Import axios if you are using it
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const currentWaterConsumption = 1750;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
-  const currentWeather = 'Rain';
-  const currentTemperature = 18;
   const batteryLevel = 58;
+
+  const fetchWeather = async () => {
+    try {
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=London&aqi=no`);
+      setWeatherData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather();
+  }, []);
 
   const renderProgressBar = () => {
     const progressValue = currentWaterConsumption / targetWaterConsumption;
@@ -21,7 +38,7 @@ const HomeScreen = () => {
         <ProgressBar
           progress={progressValue} 
           color="#3b82f6"
-          style={styles.progressBar}
+          style={[styles.progressBar, { height: 12, borderRadius: 6 }]}
         />
       </View>
     );
@@ -55,20 +72,26 @@ const HomeScreen = () => {
         <View style={styles.bannerContainer}>
           <View style={styles.bottleInfo}>
             <Image source={require('../assets/simplebottle.png')} style={styles.bottleIcon} />
-            <Text>500ml</Text>
+            <Text style={styles.bannerText}>500ml</Text>
           </View>
           <View style={styles.purityLevel}>
-            <Text>Purity</Text>
-            <Text>{waterPurity}</Text>
+            <Text style={styles.bannerText}>Purity</Text>
+            <Text style={styles.bannerText}>{waterPurity}</Text>
           </View>
           <View style={styles.waterLevel}>
-            <Text>Level</Text>
-            <Text>{waterLevelPercentage}%</Text>
+            <Text style={styles.bannerText}>Level</Text>
+            <Text style={styles.bannerText}>{waterLevelPercentage}%</Text>
           </View>
         </View>
-        <View style={[styles.weatherContainer, currentWeather === 'Rain' ? styles.rainyWeather : styles.sunnyWeather]}>
-          <Text style={styles.temperatureText}>{currentTemperature}°</Text>
-          <Text>{currentWeather}</Text>
+        <View style={styles.weatherContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <>
+              <Text style={styles.temperatureText}>{weatherData.current.temp_c}°C</Text>
+              <Text>{weatherData.current.condition.text}</Text>
+            </>
+          )}
         </View>
       </View>
       <View style={styles.bottomTabContainer}>
@@ -98,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 0,
+    marginTop: 10,
   },
   batteryContainer: {
     flexDirection: 'row',
@@ -117,12 +140,12 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: 8,
   },
   animatedWater: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#4aa3d4',
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
@@ -155,9 +178,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 18,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#32855b',
     borderRadius: 8,
     bottom: 25
+  },
+  bannerText: {
+    color: '#fff',
+    fontSize: 18,
   },
   bottleInfo: {
     alignItems: 'center',
@@ -168,6 +195,7 @@ const styles = StyleSheet.create({
   },
   purityLevel: {
     alignItems: 'center',
+    color: '#fff'
   },
   waterLevel: {
     alignItems: 'center',
@@ -176,16 +204,12 @@ const styles = StyleSheet.create({
     padding: 40,
     borderRadius: 8,
     alignItems: 'center',
-    bottom: 100
-  },
-  rainyWeather: {
-    backgroundColor: '#9e9e9e',
-  },
-  sunnyWeather: {
-    backgroundColor: '#ffeb3b',
+    bottom: 100,
+    backgroundColor: '#e0e0e0',
   },
   temperatureText: {
     fontSize: 36,
+    fontWeight: 'bold',
   },
   bottomTabContainer: {
     flexDirection: 'row',
@@ -210,6 +234,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     borderRadius: 2,
   },
+
 });
 
 export default HomeScreen;
