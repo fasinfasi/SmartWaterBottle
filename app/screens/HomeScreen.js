@@ -1,54 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, StatusBar, Animated } from 'react-native';
-import { ProgressBar } from 'react-native-paper'; // Import ProgressBar from react-native-paper
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ProgressViewIOS, Platform, StatusBar, ActivityIndicator } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import axios from 'axios';  // Import axios if you are using it
 
 const HomeScreen = () => {
-
-  // const [animatedValue, setAnimatedValue] = useState(new Animated.Value(0));
-  const [waterHeight, setWaterHeight] = useState(0); 
-
   const navigation = useNavigation();
-  const currentWaterConsumption = 1290;
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const currentWaterConsumption = 1750;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
-  const currentWeather = 'Rain';
-  const currentTemperature = 18;
   const batteryLevel = 58;
 
+  const fetchWeather = async () => {
+    try {
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=London&aqi=no`);
+      setWeatherData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      setLoading(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   Animated.loop(
-  //     Animated.timing(animatedValue, {
-  //       toValue: 1,
-  //       duration: 2000,
-  //       useNativeDriver: true,
-  //     }),
-  //   ).start();
-  // }, [animatedValue]);
-
-  // useEffect(() => {
-  //   const waterHeightPercentage = (currentWaterConsumption / targetWaterConsumption) * 100;
-  //   setWaterHeight(waterHeightPercentage);
-  // }, [currentWaterConsumption]);
-
-  // const animatedWaterStyle = {
-  //   height: animatedValue.interpolate({
-  //     inputRange: [0, 1],
-  //     outputRange: [0, waterHeight],
-  //   }),
-  // };
+  useEffect(() => {
+    fetchWeather();
+  }, []);
 
   const renderProgressBar = () => {
     const progressValue = currentWaterConsumption / targetWaterConsumption;
     return (
       <View style={{ width: '100%' }}>
         <ProgressBar
-          progress={progressValue} // Use 'progress' prop instead of 'value'
+          progress={progressValue} 
           color="#3b82f6"
-          style={styles.progressBar}
+          style={[styles.progressBar, { height: 12, borderRadius: 6 }]}
         />
       </View>
     );
@@ -58,7 +48,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
       <View style={styles.topIconsContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Bluetooth')}>
+        <TouchableOpacity onPress={() => navigation.navigate('BluetoothScreen')}>
           <Ionicons name="bluetooth" size={24} color="black" />
         </TouchableOpacity>
         <View style={styles.batteryContainer}>
@@ -68,9 +58,9 @@ const HomeScreen = () => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.waterContainer}>
-          {/* <View style={[styles.animatedWater, animatedWaterStyle]}> */}
+          <View style={styles.animatedWater}>
             <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
-          {/* </View> */}
+          </View>
         </View>
         <View style={styles.progressBarSection}>
           <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
@@ -82,20 +72,26 @@ const HomeScreen = () => {
         <View style={styles.bannerContainer}>
           <View style={styles.bottleInfo}>
             <Image source={require('../assets/simplebottle.png')} style={styles.bottleIcon} />
-            <Text>500ml</Text>
+            <Text style={styles.bannerText}>500ml</Text>
           </View>
           <View style={styles.purityLevel}>
-            <Text>Purity</Text>
-            <Text>{waterPurity}</Text>
+            <Text style={styles.bannerText}>Purity</Text>
+            <Text style={styles.bannerText}>{waterPurity}</Text>
           </View>
           <View style={styles.waterLevel}>
-            <Text>Level</Text>
-            <Text>{waterLevelPercentage}%</Text>
+            <Text style={styles.bannerText}>Level</Text>
+            <Text style={styles.bannerText}>{waterLevelPercentage}%</Text>
           </View>
         </View>
-        <View style={[styles.weatherContainer, currentWeather === 'Rain' ? styles.rainyWeather : styles.sunnyWeather]}>
-          <Text style={styles.temperatureText}>{currentTemperature}°</Text>
-          <Text>{currentWeather}</Text>
+        <View style={styles.weatherContainer}>
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <>
+              <Text style={styles.temperatureText}>{weatherData.current.temp_c}°C</Text>
+              <Text>{weatherData.current.condition.text}</Text>
+            </>
+          )}
         </View>
       </View>
       <View style={styles.bottomTabContainer}>
@@ -103,7 +99,7 @@ const HomeScreen = () => {
           <FontAwesome5 name="home" size={30} color="black" />
           <View style={styles.activeTabIndicator} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('GraphScreen')}>
+        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Bar')}>
           <FontAwesome5 name="chart-bar" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('SettingScreen')}>
@@ -125,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 10,
   },
   batteryContainer: {
     flexDirection: 'row',
@@ -144,20 +140,15 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 5,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    padding: 16,
+    marginVertical: 8,
   },
   animatedWater: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#3b82f6',
-    borderRadius: 8,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#4aa3d4',
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   waterText: {
     fontSize: 36,
@@ -168,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginVertical: 10,
     position: 'absolute', 
-    top: 220,
+    top: 220
   },
   targetWaterText: {
     fontSize: 14,
@@ -187,9 +178,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 18,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#32855b',
     borderRadius: 8,
-    bottom: 25,
+    bottom: 25
+  },
+  bannerText: {
+    color: '#fff',
+    fontSize: 18,
   },
   bottleInfo: {
     alignItems: 'center',
@@ -200,6 +195,7 @@ const styles = StyleSheet.create({
   },
   purityLevel: {
     alignItems: 'center',
+    color: '#fff'
   },
   waterLevel: {
     alignItems: 'center',
@@ -209,15 +205,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     bottom: 100,
-  },
-  rainyWeather: {
-    backgroundColor: '#9e9e9e',
-  },
-  sunnyWeather: {
-    backgroundColor: '#ffeb3b',
+    backgroundColor: '#e0e0e0',
   },
   temperatureText: {
     fontSize: 36,
+    fontWeight: 'bold',
   },
   bottomTabContainer: {
     flexDirection: 'row',
@@ -242,9 +234,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     borderRadius: 2,
   },
-  progressBar: {
-    height: 10,
-  },
+
 });
 
 export default HomeScreen;

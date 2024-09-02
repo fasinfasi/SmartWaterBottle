@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   
   title: {
-    fontSize: isSmallDevice ? width * 0.06 : width * 0.08, 
+    fontSize: isSmallDevice ? width * 0.06 : width * 0.09, 
     color: '#0000ff',
     textAlign: 'center',
   },
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     width: '80%',
-    marginBottom: '4%',
+    marginBottom: '3%',
+    marginTop: '12%',
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10, 
@@ -113,8 +114,8 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     backgroundColor: '#0000ff',
-    paddingVertical: isSmallDevice ? 12 : 15,
-    paddingHorizontal: 80,
+    paddingVertical: isSmallDevice ? 12 : 17,
+    paddingHorizontal: 85,
     borderRadius: 25,
     position: 'absolute',
     bottom: 30,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   continueButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

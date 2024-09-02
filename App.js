@@ -8,7 +8,9 @@ import SignupScreen from './app/screens/SignupScreen';
 import NameInputScreen from './app/screens/InputNameScreen';
 import AgeInputScreen from './app/screens/InputAgeScreen';
 import WeightInputScreen from './app/screens/InputWeightScreen';
+import StatusPage from './app/screens/ActivityScreen';
 import HomeScreen from './app/screens/HomeScreen';
+import BluetoothScreen from './app/screens/BluetoothScreen';
 import SettingScreen from './app/screens/SettingScreen';
 import QuestionScreen from './app/screens/QuestionScreen';
 import NotificationScreen from './app/screens/NotificationScreen';
@@ -31,7 +33,9 @@ const App = () => {
         <Stack.Screen name="NameInputScreen" component={NameInputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AgeInputScreen" component={AgeInputScreen} options={{ headerShown: false }} />
         <Stack.Screen name="WeightInputScreen" component={WeightInputScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="StatusPage" component={StatusPage} options={{ headerShown: false }} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="BluetoothScreen" component={BluetoothScreen} options={{ headerShown: false }} />
         <Stack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }} />
         <Stack.Screen name="QuestionScreen" component={QuestionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={{ headerShown: false }} />

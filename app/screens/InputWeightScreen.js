@@ -37,7 +37,7 @@ const WeightInputScreen = () => {
         // Handle continue action, e.g., navigation to next screen
         if (selectedWeight) {
           // Navigate to the next screen with the selected weight
-          navigation.navigate('HomeScreen', { weight: selectedWeight });
+          navigation.navigate('StatusPage', { weight: selectedWeight });
         }
       }}>
         <Text style={styles.buttonText}>Continue</Text>
