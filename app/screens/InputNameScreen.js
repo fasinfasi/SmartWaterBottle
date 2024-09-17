@@ -22,6 +22,8 @@ const NameInputScreen = () => {
     if (name === '' || sex === '') {
       Alert.alert('Validation Error', 'Please fill in all fields.');
     } else {
+      console.log('Name of the user: ', name);
+      console.log('Sex of the user: ', sex);
       navigation.navigate('AgeInputScreen');
     }
   };

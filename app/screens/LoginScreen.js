@@ -79,6 +79,7 @@ const LoginScreen = ({ navigation }) => {
 
         if (mockResponse.success) {
           console.log('Sign-in successful!');
+          console.log('Login email id: ', email);
           navigation.navigate('HomeScreen');
         } else {
           console.log('Sign-in failed');

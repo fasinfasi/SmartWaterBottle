@@ -69,6 +69,8 @@ const SignupScreen = ({ navigation }) => {
 
         if (mockResponse.success) {
           console.log('Sign-up successful!');
+          console.log('Name of user: ', name);
+          console.log('Sign-up email id: ', email);
           navigation.navigate('NameInputScreen');
         } else {
           console.log('Sign-up failed');

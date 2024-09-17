@@ -6,9 +6,9 @@ import ScrollPicker from "react-native-wheel-scrollview-picker";
 
 const AgeInputScreen = () => {
   const navigation = useNavigation();
-  const [selectedAge, setSelectedAge] = useState(12); // Initial age set to 12
+  const [selectedAge, setSelectedAge] = useState(18); // Initial age set to 12
 
-  const ageOptions = Array.from({ length: 120 }, (_, index) => index + 1);
+  const ageOptions = Array.from({ length: 120 - 7 + 1 }, (_, index) => index + 7);
 
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ const AgeInputScreen = () => {
       <View style={styles.scrollPickerContainer}>
         <ScrollPicker
             dataSource={ageOptions}
-            selectedIndex={selectedAge - 1} // Adjust index to match array
+            selectedIndex={selectedAge - 7} // Adjust index to match array
             renderItem={(data, index) => (
             <Text style={styles.pickerItem}>{data}</Text>
             )}
@@ -36,6 +36,7 @@ const AgeInputScreen = () => {
       <TouchableOpacity style={styles.button} onPress={() => {
         // Handle continue action, e.g., navigation to next screen
         if (selectedAge) {
+          console.log('Age of the user: ', selectedAge)
           // Navigate to the next screen with the selected age
           navigation.navigate('WeightInputScreen', { age: selectedAge });
         }
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#fff'
   },
   arrow: {
     position: 'absolute',

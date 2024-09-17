@@ -12,12 +12,12 @@ const GeneralSetting = () => {
   const [currentPicker, setCurrentPicker] = useState('start');
   const [startTime, setStartTime] = useState(() => {
     const date = new Date();
-    date.setHours(8, 0, 0, 0); // Set start time to 8:00 AM
+    date.setHours(20, 0, 0, 0); // Set start time to 8:00 PM
     return date;
   });
   const [endTime, setEndTime] = useState(() => {
     const date = new Date();
-    date.setHours(16, 0, 0, 0); // Set end time to 6:00 PM
+    date.setHours(4, 0, 0, 0); // Set end time to 4:00 AM
     return date;
   });
   const [timeFormat, setTimeFormat] = useState('12hr');
@@ -69,13 +69,12 @@ const GeneralSetting = () => {
         <Text style={styles.sleepTimeLabel}>Sleep Time :</Text>
         <View style={styles.timeFields}>
           <View style={styles.timeField}>
-            <Text>From</Text>
             <TouchableOpacity onPress={() => { setCurrentPicker('start'); setIsPickerVisible(true); }}>
               <Text style={styles.timeValue}>{startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: timeFormat === '12hr' })}</Text>
             </TouchableOpacity>
           </View>
+        <Text>to</Text>
           <View style={styles.timeField}>
-            <Text>To</Text>
             <TouchableOpacity onPress={() => { setCurrentPicker('end'); setIsPickerVisible(true); }}>
               <Text style={styles.timeValue}>{endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: timeFormat === '12hr' })}</Text>
             </TouchableOpacity>

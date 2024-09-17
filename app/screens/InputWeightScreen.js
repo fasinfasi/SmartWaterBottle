@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 
 const WeightInputScreen = () => {
   const navigation = useNavigation();
-  const [selectedWeight, setSelectedWeight] = useState(60); // Initial weight set to 60
-
-  const weightOptions = Array.from({ length: 240 }, (_, index) => index + 1);
+  const [selectedWeight, setSelectedWeight] = useState(40); // Initial weight set to 31
+  
+  // Adjusted weightOptions to start from 20 and go up to 240
+  const weightOptions = Array.from({ length: 240 - 20 + 1 }, (_, index) => index + 20);
 
   return (
     <View style={styles.container}>
@@ -16,26 +17,27 @@ const WeightInputScreen = () => {
         <Icon name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>What's your weight?</Text>
+        <Text style={styles.title}>What's your weight(kg)?</Text>
       </View>
       <View style={styles.scrollPickerContainer}>
         <ScrollPicker
-            dataSource={weightOptions}
-            selectedIndex={selectedWeight - 1} // Adjust index to match array
-            renderItem={(data, index) => (
+          dataSource={weightOptions}
+          selectedIndex={selectedWeight - 20} // Adjust index to match the new range starting at 20
+          renderItem={(data, index) => (
             <Text style={styles.pickerItem}>{data}</Text>
-            )}
-            onValueChange={(data, index) => setSelectedWeight(index + 1)}
-            wrapperHeight={180}
-            wrapperBackground="#FFFFFF"
-            itemHeight={35}
-            highlightColor="#000"
-            highlightBorderWidth={2}
+          )}
+          onValueChange={(data, index) => setSelectedWeight(data)} // Use the actual selected weight
+          wrapperHeight={180}
+          wrapperBackground="#FFFFFF"
+          itemHeight={35}
+          highlightColor="#000"
+          highlightBorderWidth={2}
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={() => {
         // Handle continue action, e.g., navigation to next screen
         if (selectedWeight) {
+          console.log('Weight of the user: ', selectedWeight)
           // Navigate to the next screen with the selected weight
           navigation.navigate('StatusPage', { weight: selectedWeight });
         }
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#fff'
   },
   arrow: {
     position: 'absolute',
@@ -60,33 +63,22 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     position: 'absolute',
-    top: '20%', // Adjust this percentweight as needed to move the title up or down
+    top: '20%', 
     width: '100%',
     alignItems: 'center',
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     color: '#0000ff',
   },
   scrollPickerContainer: {
     position: 'absolute',
     top: '40%',
-    height: '150'
+    height: 180,
   },
   pickerItem: {
     textAlign: 'center',
-    alignItems:'center',
-  },
-  weightOption: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-  },
-  selectedweightOption: {
-    backgroundColor: '#f0f0f0',
-  },
-  weightOptionText: {
-    textAlign: 'center',
+    alignItems: 'center',
   },
   button: {
     backgroundColor: '#0000ff',

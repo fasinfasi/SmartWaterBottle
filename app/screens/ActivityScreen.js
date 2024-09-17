@@ -22,8 +22,8 @@ const StatusPage = () => {
       return;
     }
 
-    console.log('Activity Level:', activityLevel);
-    console.log('Health Condition:', healthCondition);
+    console.log('Activity Level of user:', activityLevel);
+    console.log('Health Condition of user:', healthCondition);
     navigation.navigate('HomeScreen'); // Replace 'HomeScreen' with your next screen's name
   };
 

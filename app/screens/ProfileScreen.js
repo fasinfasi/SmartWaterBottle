@@ -20,40 +20,49 @@ const ProfileScreen = () => {
           <Text style={styles.title}>My Profile</Text>
         </View>
       </View>
-      <View style={styles.profileInfo}>
-        <View style={styles.profileItem}>
-          <Text style={styles.label}>Name :</Text>
-          <Text style={styles.value}>Alex</Text>
-        </View>
-        <View style={styles.profileItem}>
-          <Text style={styles.label}>Age :</Text>
-          <Text style={styles.value}>31</Text>
-        </View>
-        <View style={styles.profileItem}>
-          <Text style={styles.label}>Weight :</Text>
-          <Text style={styles.value}>40</Text>
-        </View>
-        <View style={styles.profileItem}>
-          <Text style={styles.label}>Activity :</Text>
-          <Text style={styles.value}>Moderate</Text>
-        </View>
-        <View style={styles.profileItem}>
-          <Text style={styles.label}>Health Condition :</Text>
-          <Text style={styles.value}>Diabetes</Text>
+
+      <View style={styles.contentContainer}>
+        {/* Edit button */}
+        <TouchableOpacity onPress={() => navigation.navigate('EditProfileScreen')} style={styles.edit}>
+          <FontAwesome name="edit" size={26} color="#000" />
+        </TouchableOpacity>
+
+        {/* Profile information */}
+        <View style={styles.profileInfo}>
+          <View style={styles.profileItem}>
+            <Text style={styles.label}>Name :</Text>
+            <Text style={styles.value}>Alex</Text>
+          </View>
+          <View style={styles.profileItem}>
+            <Text style={styles.label}>Sex :</Text>
+            <Text style={styles.value}>Male</Text>
+          </View>
+          <View style={styles.profileItem}>
+            <Text style={styles.label}>Age :</Text>
+            <Text style={styles.value}>31</Text>
+          </View>
+          <View style={styles.profileItem}>
+            <Text style={styles.label}>Weight :</Text>
+            <Text style={styles.value}>40</Text>
+          </View>
+          <View style={styles.profileItem}>
+            <Text style={styles.label}>Activity :</Text>
+            <Text style={styles.value}>Moderate</Text>
+          </View>
+          <View style={styles.profileItem}>
+            <Text style={styles.label}>Health Condition :</Text>
+            <Text style={styles.value}>Diabetes</Text>
+          </View>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('EditProfileScreen')} style={styles.edit}>
-      <FontAwesome name="edit" size={26} color="#000" />
-      </TouchableOpacity>
-      </LinearGradient>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#3366FF', // Solid background color
-    padding: 20,
+    padding: 10,
   },
   header: {
     flexDirection: 'row',
@@ -63,50 +72,53 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     position: 'absolute',
-    top: '10%', // Adjust this percentage as needed to move the title up or down
+    top: '15%',
     width: '100%',
     alignItems: 'center',
-    paddingVertical: '20%'
+    paddingVertical: '25%' 
+
   },
   title: {
-    fontSize: width * 0.08, // 8% of screen width
+    fontSize: width * 0.08,
     fontWeight: 'bold',
     color: '#fff',
   },
   backButton: {
     position: 'absolute',
-    top: 7,  // Adjust this value as needed to control vertical position
-    left: 0, // This places the back button in the top left corner
+    top: 30,
+    left: 7,
     padding: 10,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center', // Centers the content vertically
+    alignItems: 'center', // Centers the content horizontally
+    paddingHorizontal: '10%',
+    paddingVertical: 80,
   },
   edit: {
     position: 'absolute',
-    top: '22%', // Adjust this value to position the icon below the title
-    right: '10%', // Adjust the distance from the right edge
+    top: '25%', // Adjust this value to position the icon below the title
+    right: '10%',
   },
   profileInfo: {
-    flex: 1,
-    paddingHorizontal: '10%',
-    paddingVertical: '50%'
+    width: '100%', 
+    marginTop: '45%'
   },
   profileItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: '30%',
-    textAlignVertical:'center',
-
-
+    marginBottom: 20,
+    paddingVertical: 15,
   },
   label: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
-
   },
   value: {
     color: '#fff',
     fontSize: 16,
-
   },
 });
 

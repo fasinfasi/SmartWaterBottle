@@ -11,8 +11,9 @@ const { width } = Dimensions.get('window');
 const EditProfileScreen = () => {
   // State variables with default values set to 'Select'
   const [name, setName] = useState('');
-  const [selectedAge, setSelectedAge] = useState('Select');
   const [sex, setSex] = useState('Select');
+  const [selectedAge, setSelectedAge] = useState('Select');
+  const [selectedWeight, setSelectedWeight] = useState('Select');
   const [activityLevel, setActivityLevel] = useState('Select');
   const [healthCondition, setHealthCondition] = useState('Select');
 
@@ -20,17 +21,31 @@ const EditProfileScreen = () => {
   const navigation = useNavigation();
 
   // Handle form submission
-  const handleSubmit = () => {
-    if (name === '' || selectedAge === 'Select' || sex === 'Select' || activityLevel === 'Select' || healthCondition === 'Select') {
-      Alert.alert('Validation Error', 'Please fill out all fields');
-      return;
-    }
-    console.log('Form submitted:', { name, selectedAge, sex, activityLevel, healthCondition });
-    navigation.navigate('ProfileScreen');
-  };
+  // Handle form submission
+const handleSubmit = () => {
+  if (name === '' || selectedAge === 'Select' || sex === 'Select' || activityLevel === 'Select' || healthCondition === 'Select') {
+    Alert.alert('Validation Error', 'Please fill out all fields');
+    return;
+  }
+  // Log the form submission in the desired order
+  console.log('Form submitted:', '{',
+    '"User": '+ '"'+name+'",',
+    '"Sex": '+ '"'+sex+'",',
+    '"Age": '+ '"'+selectedAge+'",',
+    '"Weight": '+ '"'+selectedWeight+'",',
+    '"Activity": '+ '"'+activityLevel+'",',
+    '"Health": '+ '"'+healthCondition+'",',
+    '}',
+  );
+  navigation.navigate('ProfileScreen');
+};
+
 
   // Generate age options from 6 to 120 for the age picker
-  const ageOptions = Array.from({ length: 120 - 6 + 1 }, (_, i) => i + 6);
+  const ageOptions = Array.from({ length: 120 - 7 + 1 }, (_, i) => i + 7);
+
+  // Generate weight options from 20 to 240 for the age picker
+  const weightOptions = Array.from({ length: 240 - 20 + 1 }, (_, i) => i + 20);
 
   return (
     <KeyboardAvoidingView
@@ -64,6 +79,20 @@ const EditProfileScreen = () => {
               />
             </View>
 
+            {/* Sex picker */}
+            <View style={styles.pickerContainer}>
+              <Text style={styles.label}>Sex</Text>
+              <Picker
+                selectedValue={sex}
+                style={styles.dropdown}
+                onValueChange={(itemValue) => setSex(itemValue)}
+              >
+                <Picker.Item label="Select" value="Select" />
+                <Picker.Item label="Male" value="Male" />
+                <Picker.Item label="Female" value="Female" />
+              </Picker>
+            </View>
+
             {/* Age picker */}
             <View style={styles.pickerContainer}>
               <Text style={styles.label}>Age</Text>
@@ -79,17 +108,18 @@ const EditProfileScreen = () => {
               </Picker>
             </View>
 
-            {/* Sex picker */}
+            {/* Weight picker */}
             <View style={styles.pickerContainer}>
-              <Text style={styles.label}>Sex</Text>
+              <Text style={styles.label}>Weight</Text>
               <Picker
-                selectedValue={sex}
+                selectedValue={selectedWeight}
                 style={styles.dropdown}
-                onValueChange={(itemValue) => setSex(itemValue)}
+                onValueChange={(itemValue) => setSelectedWeight(itemValue)}
               >
                 <Picker.Item label="Select" value="Select" />
-                <Picker.Item label="Male" value="Male" />
-                <Picker.Item label="Female" value="Female" />
+                {weightOptions.map(weight => (
+                  <Picker.Item key={weight} label={weight.toString()} value={weight} />
+                ))}
               </Picker>
             </View>
 
@@ -165,7 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputContainer: {
-    marginBottom: 12,
+    marginBottom: 5,
   },
   input: {
     height: 40,
@@ -192,8 +222,9 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   buttonContainer: {
-    marginTop: 20, 
-    marginBottom: 20,
+    marginTop: 0, 
+    marginBottom: 10,
+    
   },
 });
 

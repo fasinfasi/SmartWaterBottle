@@ -33,6 +33,7 @@ const FeedbackScreen = ({ navigation }) => {
       return;
     }
 
+    console.log('Feedback saved successfully')
     Alert.alert('Feedback Submitted', 'Thank you for your feedback : )');
     navigation.goBack();
   };
