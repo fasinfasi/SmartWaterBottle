@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ProgressViewIOS, Platform, StatusBar, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, Easing, Platform, StatusBar, ActivityIndicator } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import axios from 'axios';  // Import axios if you are using it
 
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const waterAnimation = useRef(new Animated.Value(0)).current;
 
-  const currentWaterConsumption = 1750;
+  const currentWaterConsumption = 2566;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
@@ -31,6 +33,15 @@ const HomeScreen = () => {
     fetchWeather();
   }, []);
 
+  useEffect(() => {
+    Animated.timing(waterAnimation, {
+      toValue: currentWaterConsumption,
+      duration: 500,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.ease),
+    }).start();
+  }, [currentWaterConsumption]);
+
   const renderProgressBar = () => {
     const progressValue = currentWaterConsumption / targetWaterConsumption;
     return (
@@ -43,6 +54,11 @@ const HomeScreen = () => {
       </View>
     );
   };
+
+  const waterHeight = waterAnimation.interpolate({
+    inputRange: [0, targetWaterConsumption],
+    outputRange: ['0%', '100%'],
+  });
 
   return (
     <View style={styles.container}>
@@ -58,9 +74,9 @@ const HomeScreen = () => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.waterContainer}>
-          <View style={styles.animatedWater}>
+          <Animated.View style={[styles.animatedWater, { height: waterHeight }]}>
             <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
-          </View>
+          </Animated.View>
         </View>
         <View style={styles.progressBarSection}>
           <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
@@ -144,11 +160,12 @@ const styles = StyleSheet.create({
   },
   animatedWater: {
     width: '100%',
-    height: '100%',
     backgroundColor: '#4aa3d4',
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
   waterText: {
     fontSize: 36,
