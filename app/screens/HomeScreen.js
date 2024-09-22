@@ -5,13 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import axios from 'axios';
 
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const waterAnimation = useRef(new Animated.Value(0)).current;
 
-  const currentWaterConsumption = 2360;
+  const currentWaterConsumption = 2450;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
@@ -19,7 +20,7 @@ const HomeScreen = () => {
 
   const fetchWeather = async () => {
     try {
-      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=Portugal&aqi=no`);
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=London&aqi=no`);
       setWeatherData(response.data);
       setLoading(false);
     } catch (error) {
@@ -98,7 +99,7 @@ const HomeScreen = () => {
       <View style={styles.contentContainer}>
         <View style={styles.waterContainer}>
           <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
-          <Animated.View style={[styles.animatedWater, { height: waterHeight }]}></Animated.View>
+          <Animated.View style={[styles.animatedWater, { height: waterHeight }]} />
         </View>
         <View style={styles.progressBarSection}>
           <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
