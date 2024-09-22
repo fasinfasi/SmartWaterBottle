@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const waterAnimation = useRef(new Animated.Value(0)).current;
 
-  const currentWaterConsumption = 2450;
+  const currentWaterConsumption = 1790;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
@@ -122,19 +122,23 @@ const HomeScreen = () => {
             <Text style={styles.bannerText}>{waterLevelPercentage}%</Text>
           </View>
         </View>
-          <View style={[styles.weatherContainer, weatherData ? getWeatherTheme(weatherData.current.condition.text).style : styles.defaultWeather]}>
-          {loading ? (
-            <ActivityIndicator size="large" color="#0000ff" />
-          ) : (
-            <>
-              <Text style={styles.temperatureText}>{weatherData.current.temp_c}°C</Text>
-              <Text>{weatherData.current.condition.text}</Text>
-              <View style={styles.iconContainer}>
-                {getWeatherTheme(weatherData.current.condition.text).icon}
-              </View>
-            </>
-          )}
+        <View style={[styles.weatherContainer, weatherData ? getWeatherTheme(weatherData.current.condition.text).style : styles.defaultWeather]}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            <Text style={styles.temperatureText}>{weatherData.current.temp_c}°C</Text>
+            <Text>{weatherData.current.condition.text}</Text>
+            <FontAwesome5 name="map-marker-alt" size={16} paddingTop={6} color="#333" style={styles.locationIcon} >
+              <Text style={styles.locationText}>{weatherData.location.name}</Text>
+            </FontAwesome5>
+            <View style={styles.iconContainer}>
+              {getWeatherTheme(weatherData.current.condition.text).icon}
+            </View>
+          </>
+        )}
         </View>
+
       </View>
       <View style={styles.bottomTabContainer}>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('HomeScreen')}>
@@ -259,7 +263,7 @@ const styles = StyleSheet.create({
   temperatureText: {
     fontSize: 36,
     fontWeight: 'bold',
-  },
+  }, 
   bottomTabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
