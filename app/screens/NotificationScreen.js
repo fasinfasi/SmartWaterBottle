@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     }),
   },
   settingsContainer: {
-    marginTop: 20,
+    marginTop: 35,
   },
   settingRow: {
     flexDirection: 'row',

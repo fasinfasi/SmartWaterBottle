@@ -1,50 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Dimensions, Alert, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
 
-// Get the device's screen width to adjust the title size dynamically
 const { width } = Dimensions.get('window');
 
 const EditProfileScreen = () => {
-  // State variables with default values set to 'Select'
-  const [name, setName] = useState('');
-  const [sex, setSex] = useState('Select');
-  const [selectedAge, setSelectedAge] = useState('Select');
-  const [selectedWeight, setSelectedWeight] = useState('Select');
-  const [activityLevel, setActivityLevel] = useState('Select');
-  const [healthCondition, setHealthCondition] = useState('Select');
-
-  // Navigation hook to navigate between screens
+  const route = useRoute();
   const navigation = useNavigation();
 
-  // Handle form submission
-  // Handle form submission
-const handleSubmit = () => {
-  if (name === '' || selectedAge === 'Select' || sex === 'Select' || activityLevel === 'Select' || healthCondition === 'Select') {
-    Alert.alert('Validation Error', 'Please fill out all fields');
-    return;
-  }
-  // Log the form submission in the desired order
-  console.log('Form submitted:', '{',
-    '"User": '+ '"'+name+'",',
-    '"Sex": '+ '"'+sex+'",',
-    '"Age": '+ '"'+selectedAge+'",',
-    '"Weight": '+ '"'+selectedWeight+'",',
-    '"Activity": '+ '"'+activityLevel+'",',
-    '"Health": '+ '"'+healthCondition+'",',
-    '}',
-  );
-  navigation.navigate('ProfileScreen');
-};
+  // Initialize state with default values or values from params
+  const [name, setName] = useState(route.params?.userDetails.name || '');
+  const [sex, setSex] = useState(route.params?.userDetails.sex || 'Select');
+  const [selectedAge, setSelectedAge] = useState(route.params?.userDetails.age || 'Select');
+  const [selectedWeight, setSelectedWeight] = useState(route.params?.userDetails.weight || 'Select');
+  const [activityLevel, setActivityLevel] = useState(route.params?.userDetails.activity || 'Select');
+  const [healthCondition, setHealthCondition] = useState(route.params?.userDetails.healthCondition || 'Select');
 
+  const handleSubmit = () => {
+    if (name === '' || selectedAge === 'Select' || sex === 'Select' || activityLevel === 'Select' || healthCondition === 'Select') {
+      Alert.alert('Validation Error', 'Please fill out all fields');
+      return;
+    }
 
-  // Generate age options from 6 to 120 for the age picker
+    // Pass updated details back to ProfileScreen
+    navigation.navigate('ProfileScreen', {
+      userDetails: {
+        name,
+        sex,
+        age: selectedAge,
+        weight: selectedWeight,
+        activity: activityLevel,
+        healthCondition
+      }
+    });
+  };
+
   const ageOptions = Array.from({ length: 120 - 7 + 1 }, (_, i) => i + 7);
-
-  // Generate weight options from 20 to 240 for the age picker
   const weightOptions = Array.from({ length: 240 - 20 + 1 }, (_, i) => i + 20);
 
   return (
@@ -52,22 +46,16 @@ const handleSubmit = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <LinearGradient
-        colors={['#2DAFD8', '#185D72']} 
-        style={styles.container}
-      >
+      <LinearGradient colors={['#2DAFD8', '#185D72']} style={styles.container}>
         <ScrollView contentContainerStyle={styles.container}>
-          {/* Back arrow icon */}
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backArrowContainer}>
             <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
 
-          {/* Container for the title */}
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Edit Profile</Text>
           </View>
-          
-          {/* Container for the form fields */}
+
           <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Name</Text>
@@ -79,7 +67,6 @@ const handleSubmit = () => {
               />
             </View>
 
-            {/* Sex picker */}
             <View style={styles.pickerContainer}>
               <Text style={styles.label}>Sex</Text>
               <Picker
@@ -93,7 +80,6 @@ const handleSubmit = () => {
               </Picker>
             </View>
 
-            {/* Age picker */}
             <View style={styles.pickerContainer}>
               <Text style={styles.label}>Age</Text>
               <Picker
@@ -108,7 +94,6 @@ const handleSubmit = () => {
               </Picker>
             </View>
 
-            {/* Weight picker */}
             <View style={styles.pickerContainer}>
               <Text style={styles.label}>Weight</Text>
               <Picker
@@ -123,7 +108,6 @@ const handleSubmit = () => {
               </Picker>
             </View>
 
-            {/* Activity level picker */}
             <View style={styles.pickerContainer}>
               <Text style={styles.label}>Activity Level</Text>
               <Picker
@@ -138,7 +122,6 @@ const handleSubmit = () => {
               </Picker>
             </View>
 
-            {/* Health condition picker */}
             <View style={styles.pickerContainer}>
               <Text style={styles.label}>Health Condition</Text>
               <Picker
@@ -147,19 +130,16 @@ const handleSubmit = () => {
                 onValueChange={(itemValue) => setHealthCondition(itemValue)}
               >
                 <Picker.Item label="Select" value="Select" />
-                <Picker.Item label="No Specification" value="No Specification" />
-                <Picker.Item label="Kidney Stone" value="Kidney Stone" />
-                <Picker.Item label="Heart Diseases" value="Heart Diseases" />
+                <Picker.Item label="No Concerns" value="No Concerns" />
+                <Picker.Item label="Kidney stone" value="Kidney stone" />
+                <Picker.Item label="Liver disease" value="Liver Disease" />
                 <Picker.Item label="Diabetes" value="Diabetes" />
                 <Picker.Item label="Pregnancy" value="Pregnancy" />
                 <Picker.Item label="Breastfeeding" value="Breastfeeding" />
               </Picker>
             </View>
 
-            {/* Submit button */}
-            <View style={styles.buttonContainer}>
-              <Button title="Submit" onPress={handleSubmit} color="#2250e6" />
-            </View>
+            <Button title="Save" onPress={handleSubmit} />
           </View>
         </ScrollView>
       </LinearGradient>

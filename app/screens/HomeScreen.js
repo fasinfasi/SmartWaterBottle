@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ProgressViewIOS, Platform, StatusBar, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, Easing, Platform, StatusBar, ActivityIndicator } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import axios from 'axios';  // Import axios if you are using it
+import axios from 'axios';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const waterAnimation = useRef(new Animated.Value(0)).current;
 
-  const currentWaterConsumption = 1750;
+  const currentWaterConsumption = 2360;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
@@ -18,7 +19,7 @@ const HomeScreen = () => {
 
   const fetchWeather = async () => {
     try {
-      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=London&aqi=no`);
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=Portugal&aqi=no`);
       setWeatherData(response.data);
       setLoading(false);
     } catch (error) {
@@ -31,17 +32,55 @@ const HomeScreen = () => {
     fetchWeather();
   }, []);
 
+  useEffect(() => {
+    Animated.timing(waterAnimation, {
+      toValue: currentWaterConsumption,
+      duration: 500,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.ease),
+    }).start();
+  }, [currentWaterConsumption]);
+
   const renderProgressBar = () => {
     const progressValue = currentWaterConsumption / targetWaterConsumption;
     return (
       <View style={{ width: '100%' }}>
         <ProgressBar
-          progress={progressValue} 
+          progress={progressValue}
           color="#3b82f6"
           style={[styles.progressBar, { height: 12, borderRadius: 6 }]}
         />
       </View>
     );
+  };
+
+  const waterHeight = waterAnimation.interpolate({
+    inputRange: [0, targetWaterConsumption],
+    outputRange: ['0%', '100%'],
+  });
+
+  const getWeatherTheme = (condition) => {
+    switch (condition) {
+      case 'Sunny':
+      case 'Clear':
+        return { icon: <FontAwesome5 name="sun" size={50} color="#c97214" solid />, style: styles.sunnyWeather };
+      case 'Cloudy':
+      case 'Partly cloudy':
+      case 'Overcast':
+        return { icon: <FontAwesome5 name="cloud" size={50} color="gray" />, style: styles.cloudyWeather };
+      case 'Light rain':
+      case 'Moderate rain':
+      case 'Heavy rain':
+      case 'Patchy rain possible':
+        return { icon: <FontAwesome5 name="cloud-showers-heavy" size={50} color="blue" />, style: styles.rainyWeather };
+      case 'Mist':
+      case 'Fog':
+        return { icon: <FontAwesome5 name="smog" size={50} color="gray" />, style: styles.mistyWeather };
+      case 'Thundery outbreaks possible':
+        return { icon: <FontAwesome5 name="cloud-bolt" size={50} color="blue" />, style: styles.thunderWeather };
+      default:
+        return { icon: <FontAwesome5 name="cloud-sun" size={50} color="white" />, style: styles.defaultWeather };
+    }
   };
 
   return (
@@ -58,9 +97,8 @@ const HomeScreen = () => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.waterContainer}>
-          <View style={styles.animatedWater}>
-            <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
-          </View>
+          <Text style={styles.waterText}>{currentWaterConsumption}ml</Text>
+          <Animated.View style={[styles.animatedWater, { height: waterHeight }]}></Animated.View>
         </View>
         <View style={styles.progressBarSection}>
           <Text style={styles.targetWaterText}>{targetWaterConsumption}ml</Text>
@@ -83,24 +121,27 @@ const HomeScreen = () => {
             <Text style={styles.bannerText}>{waterLevelPercentage}%</Text>
           </View>
         </View>
-        <View style={styles.weatherContainer}>
+          <View style={[styles.weatherContainer, weatherData ? getWeatherTheme(weatherData.current.condition.text).style : styles.defaultWeather]}>
           {loading ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : (
             <>
               <Text style={styles.temperatureText}>{weatherData.current.temp_c}°C</Text>
               <Text>{weatherData.current.condition.text}</Text>
+              <View style={styles.iconContainer}>
+                {getWeatherTheme(weatherData.current.condition.text).icon}
+              </View>
             </>
           )}
         </View>
       </View>
       <View style={styles.bottomTabContainer}>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('HomeScreen')}>
-          <FontAwesome5 name="home" size={30} color="black" />
+          <Ionicons name="home" size={30} color="black" />
           <View style={styles.activeTabIndicator} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Bar')}>
-          <FontAwesome5 name="chart-bar" size={24} color="black" />
+        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('GraphScreen')}>
+          <FontAwesome5 name="chart-bar" size={27} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('SettingScreen')}>
           <FontAwesome5 name="user" size={24} color="black" />
@@ -138,28 +179,36 @@ const styles = StyleSheet.create({
   },
   waterContainer: {
     height: 200,
+    borderWidth: 1,
+    borderColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 8,
+    position: 'relative',
   },
   animatedWater: {
     width: '100%',
-    height: '100%',
     backgroundColor: '#4aa3d4',
-    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
   waterText: {
-    fontSize: 36,
-    color: '#fff',
+    fontSize: 45,
+    fontWeight: 'bold',
+    color: '#082759',
+    position: 'absolute',
+    zIndex: 1,
+    top: '43%',
+    transform: [{ translateY: -18 }],
   },
   progressBarSection: {
     width: '100%',
     alignItems: 'flex-end',
     marginVertical: 10,
-    position: 'absolute', 
-    top: 220
+    position: 'absolute',
+    top: 220,
   },
   targetWaterText: {
     fontSize: 14,
@@ -180,7 +229,7 @@ const styles = StyleSheet.create({
     padding: 18,
     backgroundColor: '#32855b',
     borderRadius: 8,
-    bottom: 25
+    bottom: 25,
   },
   bannerText: {
     color: '#fff',
@@ -195,7 +244,7 @@ const styles = StyleSheet.create({
   },
   purityLevel: {
     alignItems: 'center',
-    color: '#fff'
+    color: '#fff',
   },
   waterLevel: {
     alignItems: 'center',
@@ -205,7 +254,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     bottom: 100,
-    backgroundColor: '#e0e0e0',
   },
   temperatureText: {
     fontSize: 36,
@@ -219,13 +267,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
-    paddingVertical: 16,
     borderTopWidth: 1,
     borderColor: '#e0e0e0',
+    backgroundColor: '#fff',
+    height: 60,
   },
   tabButton: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
   activeTabIndicator: {
     width: 30,
@@ -234,7 +283,34 @@ const styles = StyleSheet.create({
     marginTop: 4,
     borderRadius: 2,
   },
-
+  iconContainer: {
+    position: 'absolute',
+    top: 10, // Adjust the position as needed
+    right: 10, // Adjust the position as needed
+    alignItems: 'center',
+  },
+  // Themes based on weather conditions
+  rainyWeather: {
+    backgroundColor: '#99afcc', // Light steel blue for rain
+  },
+  heavyRainWeather: {
+    backgroundColor: '#4682b4', // Steel blue for heavy rain
+  },
+  cloudyWeather: {
+    backgroundColor: '#d3d3d3', // Light gray for cloudy conditions
+  },
+  sunnyWeather: {
+    backgroundColor: '#ffe680', // Light yellow for sunny weather
+  },
+  mistyWeather: {
+    backgroundColor: '#f0e68c', // Light khaki for mist/fog
+  },
+  thunderWeather: {
+    backgroundColor: '#111345', // Firebrick red for thunderstorms
+  },
+  defaultWeather: {
+    backgroundColor: '#b9eddc', // Default neutral theme
+  },
 });
 
 export default HomeScreen;

@@ -55,9 +55,9 @@ const StatusPage = () => {
             onValueChange={(itemValue) => setHealthCondition(itemValue)}
           >
             <Picker.Item label="Health Condition" value="" />
-            <Picker.Item label="No Specification" value="no_specification" />
+            <Picker.Item label="No Concerns" value="No Concerns" />
             <Picker.Item label="Kidney Stone" value="kidney_stone" />
-            <Picker.Item label="Heart Diseases" value="heart_diseases" />
+            <Picker.Item label="Liver Diseases" value="liver_diseases" />
             <Picker.Item label="Diabetes" value="diabetes" />
             <Picker.Item label="Pregnancy" value="pregnancy" />
             <Picker.Item label="Breastfeeding" value="breastfeeding" />

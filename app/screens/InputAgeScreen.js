@@ -6,7 +6,7 @@ import ScrollPicker from "react-native-wheel-scrollview-picker";
 
 const AgeInputScreen = () => {
   const navigation = useNavigation();
-  const [selectedAge, setSelectedAge] = useState(18); // Initial age set to 12
+  const [selectedAge, setSelectedAge] = useState(18); // Initial age set to 18
 
   const ageOptions = Array.from({ length: 120 - 7 + 1 }, (_, index) => index + 7);
 
