@@ -25,6 +25,14 @@ const EditProfileScreen = () => {
       return;
     }
 
+    console.log('Updated Profile Details:');
+    console.log('Name:', name);
+    console.log('Sex:', sex);
+    console.log('Age:', selectedAge);
+    console.log('Weight:', selectedWeight);
+    console.log('Activity Level:', activityLevel);
+    console.log('Health Condition:', healthCondition);
+
     // Pass updated details back to ProfileScreen
     navigation.navigate('ProfileScreen', {
       userDetails: {

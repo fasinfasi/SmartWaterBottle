@@ -19,8 +19,8 @@ const QuestionScreen = ({ navigation }) => {
 
   const answers = [
     'In home page, there is a Bluetooth icon, \n - Tap on it \n - There will be a popup connect button \n - Click on it and connect',
-    'Hydration target depends on your\n - Age \n - Sex \n - Weight \n - Activity level \n - Health condition',
-    'Go to statistic page and click on the graph to get your data.',
+    'Hydration target depends on your\n - Age \n - Sex \n - Weight \n - Activity level \n - Health condition \n - Weather',
+    'Go to statistic page and click on the graph there you can compare your water intake in differ days then realize progress.',
     'Yes, your data is safe in this app. We only use it to analyze your required water level. We never share your data with any third parties.',
     'You can set your sleep time in general settings, which helps us restrict notifications.',
   ];
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   answerText: {
     marginTop: 0,
-    color: '#000',
+    color: '#fff',
     backgroundColor: '#3AA5D3',
     fontSize: 16,
     fontWeight: '550',

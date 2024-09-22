@@ -38,21 +38,34 @@ const GeneralSetting = () => {
       "Are you sure you want to delete all data permanently?",
       [
         { text: "Cancel", style: "cancel" },
-        { text: "Delete", onPress: () => { /* Implement delete logic here */ } }
+        { 
+          text: "Delete", 
+          onPress: () => { 
+            console.log('User data are deleted'); // Console message for data deletion
+            // Implement delete logic here 
+          } 
+        }
       ]
     );
   };
-
+  
   const handleSignOut = () => {
     Alert.alert(
       "Confirm Sign Out",
       "Are you sure you want to sign out?",
       [
         { text: "Cancel", style: "cancel" },
-        { text: "Sign Out", onPress: () => navigation.navigate('WelcomeScreen') }
+        { 
+          text: "Sign Out", 
+          onPress: () => {
+            console.log('User signed out'); // Console message for sign-out
+            navigation.navigate('WelcomeScreen');
+          }
+        }
       ]
     );
   };
+  
 
   return (
     <View style={styles.container}>

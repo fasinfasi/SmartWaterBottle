@@ -11,8 +11,14 @@ const NotificationSettings = () => {
   const [drinkRemindRingtone, setDrinkRemindRingtone] = useState('Ringtone 4');
   const [timeToRefillRingtone, setTimeToRefillRingtone] = useState('Ringtone 7');
 
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => {
+      const newState = !previousState;
+      console.log(newState ? 'Notification On' : 'Notification Muted'); // Log switch state
+      return newState;
+    });
+  };
+  
   // Define different ringtone options for each notification type
   const timeToDrinkOptions = ['Ringtone 1', 'Ringtone 2', 'Ringtone 3'];
   const drinkRemindOptions = ['Ringtone 4', 'Ringtone 5', 'Ringtone 6'];
@@ -47,19 +53,26 @@ const NotificationSettings = () => {
             <Text style={styles.settingText}>Time to Drink</Text>
             <Picker
               selectedValue={timeToDrinkRingtone}
-              onValueChange={(itemValue) => setTimeToDrinkRingtone(itemValue)}
+              onValueChange={(itemValue) => {
+                setTimeToDrinkRingtone(itemValue);
+                console.log('Time to Drink Ringtone:', itemValue); // Log selected value
+              }}
               style={styles.picker}
             >
               {timeToDrinkOptions.map((ringtone) => (
                 <Picker.Item key={ringtone} label={ringtone} value={ringtone} />
               ))}
             </Picker>
+
           </View>
           <View style={styles.settingRow}>
             <Text style={styles.settingText}>Drink Remind</Text>
             <Picker
               selectedValue={drinkRemindRingtone}
-              onValueChange={(itemValue) => setDrinkRemindRingtone(itemValue)}
+              onValueChange={(itemValue) => {
+                setDrinkRemindRingtone(itemValue);
+                console.log('Drink Remind Ringtone:', itemValue); // Log selected value
+              }}
               style={styles.picker}
             >
               {drinkRemindOptions.map((ringtone) => (
@@ -71,7 +84,10 @@ const NotificationSettings = () => {
             <Text style={styles.settingText}>Time to Refill</Text>
             <Picker
               selectedValue={timeToRefillRingtone}
-              onValueChange={(itemValue) => setTimeToRefillRingtone(itemValue)}
+              onValueChange={(itemValue) => {
+                setTimeToRefillRingtone(itemValue);
+                console.log('Time to Refill Ringtone:', itemValue); // Log selected value
+              }}
               style={styles.picker}
             >
               {timeToRefillOptions.map((ringtone) => (

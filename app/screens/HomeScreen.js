@@ -73,7 +73,7 @@ const HomeScreen = () => {
       case 'Moderate rain':
       case 'Heavy rain':
       case 'Patchy rain possible':
-        return { icon: <FontAwesome5 name="cloud-showers-heavy" size={50} color="blue" />, style: styles.rainyWeather };
+        return { icon: <FontAwesome5 name="cloud-showers-heavy" size={50} color="#2b4bc2" />, style: styles.rainyWeather };
       case 'Mist':
       case 'Fog':
         return { icon: <FontAwesome5 name="smog" size={50} color="gray" />, style: styles.mistyWeather };
