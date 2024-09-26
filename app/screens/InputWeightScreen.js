@@ -27,9 +27,9 @@ const WeightInputScreen = () => {
             <Text style={styles.pickerItem}>{data}</Text>
           )}
           onValueChange={(data, index) => setSelectedWeight(data)} // Use the actual selected weight
-          wrapperHeight={180}
+          wrapperHeight={160}
           wrapperBackground="#FFFFFF"
-          itemHeight={35}
+          itemHeight={45}
           highlightColor="#000"
           highlightBorderWidth={2}
         />
@@ -73,12 +73,13 @@ const styles = StyleSheet.create({
   },
   scrollPickerContainer: {
     position: 'absolute',
-    top: '40%',
-    height: 180,
+    top: '43%',
+    height: 160
   },
   pickerItem: {
     textAlign: 'center',
     alignItems: 'center',
+    fontSize: 24,
   },
   button: {
     backgroundColor: '#0000ff',

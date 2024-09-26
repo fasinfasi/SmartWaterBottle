@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const waterAnimation = useRef(new Animated.Value(0)).current;
 
-  const currentWaterConsumption = 1790;
+  const currentWaterConsumption = 2660;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;
@@ -20,7 +20,7 @@ const HomeScreen = () => {
 
   const fetchWeather = async () => {
     try {
-      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=London&aqi=no`);
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=ad0708fea04d40c9b1c161449240109&q=kerala&aqi=no`);
       setWeatherData(response.data);
       setLoading(false);
     } catch (error) {
