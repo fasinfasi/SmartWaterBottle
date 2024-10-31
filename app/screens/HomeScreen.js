@@ -11,8 +11,7 @@ const HomeScreen = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const waterAnimation = useRef(new Animated.Value(0)).current;
-
-  const currentWaterConsumption = 2660;
+  const currentWaterConsumption = 2600;
   const targetWaterConsumption = 3600;
   const waterPurity = 'Good';
   const waterLevelPercentage = 48;

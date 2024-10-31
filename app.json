@@ -18,6 +18,9 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {}
+    "web": {
+      "favicon": "./assets/water_bottle_logo_welcome_page.png" // Add your favicon if you have one
+    },
+    "platforms": ["ios", "android", "web"]
   }
 }
