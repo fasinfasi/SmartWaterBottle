@@ -4,7 +4,7 @@
     "slug": "SmartWaterBottle",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "aquasync", 
+    "scheme": "aquasync",
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
@@ -16,11 +16,16 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.aquasync.SmartWaterBottle"
     },
     "web": {
-      "favicon": "./assets/water_bottle_logo_welcome_page.png" // Add your favicon if you have one
+      "favicon": "./assets/water_bottle_logo_welcome_page.png"
     },
-    "platforms": ["ios", "android", "web"]
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
   }
 }
