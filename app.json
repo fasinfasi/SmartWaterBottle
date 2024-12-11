@@ -1,31 +1,21 @@
 {
-  "expo": {
-    "name": "SmartWaterBottle",
-    "slug": "SmartWaterBottle",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "scheme": "aquasync",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "resizeMode": "contain",
+  "name": "SmartWaterBottle",
+  "displayName": "SmartWaterBottle",
+  "android": {
+    "package": "com.aquasync.SmartWaterBottle",
+    "adaptiveIcon": {
       "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.aquasync.SmartWaterBottle"
-    },
-    "web": {
-      "favicon": "./assets/water_bottle_logo_welcome_page.png"
-    },
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ]
-  }
+    }
+  },
+  "ios": {
+    "supportsTablet": true
+  },
+  "web": {
+    "favicon": "./assets/water_bottle_logo_welcome_page.png"
+  },
+  "platforms": [
+    "ios",
+    "android",
+    "web"
+  ]
 }
