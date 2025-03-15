@@ -1,0 +1,64 @@
+{
+    "python.pythonPath": "path/to/your/venv/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_flask"
+    ],
+    "python.autoComplete.extraPaths": [
+        "./venv/lib/python3.x/site-packages"
+    ],
+    "python.formatting.provider": "black",
+    "python.testing.defaultTestFramework": "unittest",
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "*_test.py"
+    ],
+    "mongo.connectionString": "mongodb://localhost:27017",
+    "editor.bracketPairColorization.enabled": true,
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "editor.snippetSuggestions": "top",
+    "editor.snippets": {
+        "mongoUpdate": {
+            "prefix": "mongoUpdate",
+            "body": [
+                "mongo.db.$1.update_one({$2}, {$set: {$3}})"
+            ],
+            "description": "MongoDB update query"
+        },
+        "mongoFindOne": {
+            "prefix": "mongoFindOne",
+            "body": [
+                "mongo.db.$1.find_one({$2})"
+            ],
+            "description": "MongoDB find one query"
+        }
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.useLibraryCodeForTypes": true,
+    "editor.formatOnSave": true,
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "88"
+    ],
+    "python.envFile": "${workspaceFolder}/.env",
+    "debug.allowBreakpointsEverywhere": true,
+    "debug.openDebug": "openOnSessionStart",
+    "terminal.integrated.env.windows": {
+        "FLASK_APP": "app.py",
+        "FLASK_ENV": "development"
+    },
+    "python.testing.unittestEnabled": true,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": false,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false
+}

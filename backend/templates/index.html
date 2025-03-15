@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydration Analysis</title>
+</head>
+<body>
+    <h1>Hydration Analysis Results</h1>
+    
+    <h2>Analysis for Dates: {{ date1 }} vs {{ date2 }}</h2>
+    <p><strong>Average Points for {{ date1 }}:</strong> {{ mean1 }} ({{ feedback }})</p>
+    <p><strong>Average Points for {{ date2 }}:</strong> {{ mean2 }} ({{ feedback }})</p>
+    <p><strong>Standard Deviation for {{ date1 }}:</strong> {{ sd1 }}</p>
+    <p><strong>Standard Deviation for {{ date2 }}:</strong> {{ sd2 }}</p>
+    
+    <h3>Water Consumption Plot</h3>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Water Consumption Plot">
+</body>
+</html>
